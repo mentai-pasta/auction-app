@@ -1,0 +1,28 @@
+{
+  "name": "auction-app",
+  "version": "0.1.0",
+  "description": "HAL自動車販売 オークションシステム",
+  "main": "index.js",
+  "scripts": {
+    "build": "turbo build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@9.12.3",
+  "engines": {
+    "npm": "use pnpm",
+    "yarn": "use pnpm",
+    "pnpm": ">=9.12.3"
+  },
+  "devDependencies": {
+    "turbo": "^2.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
+    "eslint": "^9.14.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.3"
+  },
+  "dependencies": {}
+}
