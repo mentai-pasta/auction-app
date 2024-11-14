@@ -5,8 +5,8 @@
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
     "build": "tsc -p ./tsconfig.json",
-    "lint": "eslint --ignore-pattern .gitignore",
-    "format": "prettier . --ignore-path .gitignore --write"
+    "lint": "eslint",
+    "format": "prettier . --write"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.5",

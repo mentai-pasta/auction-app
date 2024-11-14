@@ -3,6 +3,7 @@
   "settings": {
     "next": {
       "rootDir": "apps/front/"
-    }
+    },
+    "ignores": [".next"]
   }
 }
