@@ -2,14 +2,23 @@
   "name": "api",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts"
+    "dev": "tsx watch src/index.ts",
+    "start": "node .dist/index.js",
+    "build": "tsc -p ./tsconfig.json",
+    "lint": "eslint",
+    "format": "prettier . --write"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.5",
     "hono": "^4.6.9"
   },
   "devDependencies": {
-    "@types/node": "^20.11.17",
-    "tsx": "^4.7.1"
+    "@eslint/eslintrc": "^3.1.0",
+    "@eslint/js": "^9.14.0",
+    "@types/node": "^22.9.0",
+    "eslint": "^9.14.0",
+    "prettier": "^3.3.3",
+    "tsx": "^4.7.1",
+    "typescript": "^5"
   }
 }
