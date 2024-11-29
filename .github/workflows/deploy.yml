@@ -1,0 +1,32 @@
+name: CI-dev
+
+# dev環境デプロイ用
+on:
+  push:
+    branches: [ "dev" ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install cloudflared
+        run: |
+          lastest_version=$(curl -s $GITHUB_API_URL/repos/cloudflare/cloudflared/releases/latest | jq -r '.tag_name')
+          mkdir -p /tmp/cloudflared
+          curl -sL -o /tmp/cloudflared/cloudflared $GITHUB_SERVER_URL/cloudflare/cloudflared/releases/download/$lastest_version/cloudflared-linux-amd64
+          chmod +x /tmp/cloudflared/cloudflared
+          /tmp/cloudflared/cloudflared --version
+      - name: Install SSH Key for Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.DEVELOP_HOST }}
+          username: github
+          port: 22
+          script: |
+            /tmp/cloudflared/cloudflared access ssh --id ${{ secrets.SSH_CLOUDFLARED_ID }} --secret ${{ secrets.SSH_CLOUDFLARED_SECRET }} --hostname %h
+            cd /home/github/apps/hal-platform/docker-files/node/projects/auction-app
+            git pull origin dev
+            cd /home/github/apps/hal-platform
+            docker compose restart
