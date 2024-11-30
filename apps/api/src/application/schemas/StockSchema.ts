@@ -14,8 +14,8 @@ export const StockSchema = z.object({
     .uuid()
     .openapi({ example: 'c1ef68d4-4675-49c5-63dc-4adc52284d82' }),
   begin_time: z.string().datetime().openapi({ example: '2024-11-10 12:00' }),
-  created_at: z.string().datetime().openapi({ example: '2024-11-5 12:00' }),
-  updated_at: z.string().datetime().openapi({ example: '2024-11-5 12:00' }),
+  created_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
+  updated_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
 });
 
 export const StockListSchema = z.array(StockSchema).openapi('StockListSchema');

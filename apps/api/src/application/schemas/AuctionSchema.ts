@@ -52,7 +52,7 @@ export const AuctionSchema = z.object({
     .int()
     .positive()
     .openapi({ example: 30, description: '商品の制限時間（分）' }),
-  begin_date: z.string().datetime().openapi({ example: '2024-11-5 12:00' }),
+  begin_date: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
 });
 
 export const AuctionListSchema = z.array(AuctionSchema).openapi('AuctionListSchema');
