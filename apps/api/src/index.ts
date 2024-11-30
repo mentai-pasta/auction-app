@@ -20,7 +20,7 @@ app.openapi(getAuctionRoute, getAuctionsHandler);
 app.doc('/doc', {
   openapi: '3.0.0',
   info: {
-    version: '0.2.0',
+    version: process.env.npm_package_version,
     title: 'Auction API',
   },
 });
