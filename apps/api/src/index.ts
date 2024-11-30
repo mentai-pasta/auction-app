@@ -11,12 +11,8 @@ app.use(async (_, next) => {
   await next();
 });
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!');
-});
-
 app.get('/ping', (c) => {
-  return c.json({ message: `hi your message is ${c.req.query('message')}` });
+  return c.json({ message: 'Hello Hono! Status OK!' });
 });
 
 app.openapi(getAuctionRoute, getAuctionsHandler);
@@ -24,7 +20,7 @@ app.openapi(getAuctionRoute, getAuctionsHandler);
 app.doc('/doc', {
   openapi: '3.0.0',
   info: {
-    version: 'α0.1.0',
+    version: '0.2.0',
     title: 'Auction API',
   },
 });

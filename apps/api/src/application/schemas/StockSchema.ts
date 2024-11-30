@@ -9,7 +9,7 @@ export const StockSchema = z.object({
     .string()
     .uuid()
     .openapi({ example: '07c3ce66-bda2-4e10-3752-8665cd96b26d' }),
-  sold_statud_id: z
+  sold_status_id: z
     .string()
     .uuid()
     .openapi({ example: 'c1ef68d4-4675-49c5-63dc-4adc52284d82' }),
