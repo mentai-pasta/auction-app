@@ -37,6 +37,6 @@ jobs:
           name: id_ed25519
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: run pull script
-        run: bash deploy-pull.sh ${{ secrets.DEVELOP_HOST }} github
+        run: bash deploy-pull.sh github ${{ secrets.DEVELOP_HOST }}
       - name: run restart script
-        run: bash deploy-restart.sh ${{ secrets.DEVELOP_HOST }} github
+        run: bash deploy-restart.sh github ${{ secrets.DEVELOP_HOST }}
