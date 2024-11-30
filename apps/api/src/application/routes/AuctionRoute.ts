@@ -1,7 +1,7 @@
 import { createRoute } from '@hono/zod-openapi';
 import { AuctionListSchema, AuctionQueryParamSchema } from '../schemas/AuctionSchema.js';
 
-export const AuctionRoute = createRoute({
+export const getAuctionRoute = createRoute({
   method: 'get',
   path: '/auctions',
   description: 'オークション一覧を取得する',
