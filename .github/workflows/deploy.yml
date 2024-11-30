@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SSH_PROXY_COMMAND: /tmp/cloudflared/cloudflared access ssh --id ${{ secrets.SSH_CLOUDFLARED_ID }} --secret ${{ secrets.SSH_CLOUDFLARED_SECRET }} --hostname %h
+      HOST: ${{ secrets.DEVELOP_HOST }}
+      USER: github
     steps:
       - uses: actions/checkout@v2
       - name: Install cloudflared
@@ -37,6 +39,6 @@ jobs:
           name: id_ed25519
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
       - name: run pull script
-        run: bash deploy-pull.sh github ${{ secrets.DEVELOP_HOST }}
+        run: bash deploy-pull.sh $USER $HOST $SSH_PROXY_COMMAND
       - name: run restart script
-        run: bash deploy-restart.sh github ${{ secrets.DEVELOP_HOST }}
+        run: bash deploy-restart.sh $USER $HOST $SSH_PROXY_COMMAND
