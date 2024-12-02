@@ -16,13 +16,10 @@ on:
   push:
     branches: 
       - 'dev'
+      - 'ci/*'
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SSH_PROXY_COMMAND: /tmp/cloudflared/cloudflared access ssh --id ${{ secrets.SSH_CLOUDFLARED_ID }} --secret ${{ secrets.SSH_CLOUDFLARED_SECRET }} --hostname %h
-      HOST: ${{ secrets.DEVELOP_HOST }}
-      USER: github
     steps:
       - uses: actions/checkout@v2
       - name: Install cloudflared
@@ -38,7 +35,14 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           name: id_ed25519
           known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          config: |
+            Host dev-server
+              HostName ${{ secrets.DEVELOP_HOST }}
+              User github
+              IdentityFile ~/.ssh/id_ed25519
+              ProxyCommand /tmp/cloudflared/cloudflared access ssh --id ${{ secrets.SSH_CLOUDFLARED_ID }} --secret ${{ secrets.SSH_CLOUDFLARED_SECRET }} --hostname %h
+              StrictHostKeyChecking no
       - name: run pull script
-        run: bash deploy-pull.sh $USER $HOST $SSH_PROXY_COMMAND
+        run: bash deploy-pull.sh
       - name: run restart script
-        run: bash deploy-restart.sh $USER $HOST $SSH_PROXY_COMMAND
+        run: bash deploy-restart.sh
