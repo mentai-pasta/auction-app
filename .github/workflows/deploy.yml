@@ -16,7 +16,6 @@ on:
   push:
     branches: 
       - 'dev'
-      - 'ci/*'
 jobs:
   build:
     runs-on: ubuntu-latest
