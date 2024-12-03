@@ -1,6 +1,6 @@
 import React from 'react';
 
-type ButtonVariant = 'primary' | 'secondary' | 'accent';
+type ButtonVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'ghost';
 type ButtonSize = 'small' | 'medium' | 'large';
 
 interface ButtonProps {
