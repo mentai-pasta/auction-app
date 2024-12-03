@@ -1,12 +1,13 @@
 import React from 'react';
 
-type ButtonType = 'login' | 'auction' | 'register' | 'cancel';
+type ButtonType = 'login' | 'bid' | 'register' | 'next' | 'cancel';
 type ButtonSize = 'small' | 'medium' | 'large';
 
 const defaultLabels: Record<ButtonType, string> = {
     login: 'ログイン',
     register: '新規登録',
-    bid: '落札',
+    bid: '入札する',
+    next: '次の車両へ',
     cancel: 'キャンセル',
 };
 
@@ -27,8 +28,9 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
     const variantClass = {
         login: 'btn-neutral',
-        auction: 'btn-accent',
-        register: 'btn-secondary',
+        register: 'btn-primary',
+        next: 'btn-neutral',
+        bid: 'btn-neutral',
         cancel: 'btn-error',
     }[type];
 
