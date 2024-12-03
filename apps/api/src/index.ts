@@ -1,10 +1,23 @@
 import { serve } from '@hono/node-server';
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
+import { cors } from 'hono/cors';
 import { getAuctionsHandler } from './application/controller/AuctionController.js';
 import { getAuctionRoute } from './application/routes/AuctionRoute.js';
 
 const app = new OpenAPIHono();
+
+app.use(
+  '*',
+  cors({
+    origin: 'http://localhost:3000',
+    allowHeaders: ['X-Custom-Header', 'Upgrade-Insecure-Requests'],
+    allowMethods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH', 'OPTIONS'],
+    exposeHeaders: ['Content-Length', 'X-Kuma-Revision', 'Content-Type'],
+    maxAge: 600,
+    credentials: true,
+  }),
+);
 
 app.use(async (_, next) => {
   console.log(`request`);
