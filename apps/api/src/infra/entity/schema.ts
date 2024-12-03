@@ -190,7 +190,7 @@ export const series = pgTable(
   'series',
   {
     seriesId: uuid('series_id').defaultRandom().primaryKey().notNull(),
-    name: varchar({ length: 255 }),
+    name: varchar({ length: 255 }).notNull(),
     manufacturerId: uuid('manufacturer_id').notNull(),
   },
   (table) => {
