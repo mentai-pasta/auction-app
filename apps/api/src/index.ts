@@ -6,6 +6,7 @@ import { getAuctionsHandler } from './application/controller/AuctionController.j
 import { getAuctionRoute } from './application/routes/AuctionRoute.js';
 
 const app = new OpenAPIHono();
+const api = app.basePath('/api/v1');
 
 app.use(
   '*',
@@ -28,17 +29,17 @@ app.get('/ping', (c) => {
   return c.json({ message: 'Hello Hono! Status OK!' });
 });
 
-app.openapi(getAuctionRoute, getAuctionsHandler);
+api.openapi(getAuctionRoute, getAuctionsHandler);
 
-app.doc('/doc', {
-  openapi: '3.0.0',
-  info: {
-    version: process.env.npm_package_version,
-    title: 'Auction API',
-  },
-});
-
-app.get('/doc/ui', swaggerUI({ url: '/doc' }));
+api
+  .doc('/doc', {
+    openapi: '3.0.0',
+    info: {
+      version: process.env.npm_package_version,
+      title: 'Auction API',
+    },
+  })
+  .get('/doc/ui', swaggerUI({ url: '/api/v1/doc' }));
 
 const port = 3001;
 console.log(`Server is running on http://localhost:${port}`);
