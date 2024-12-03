@@ -1,25 +1,37 @@
 import React from 'react';
 
-type ButtonVariant = 'primary' | 'secondary' | 'accent' | 'neutral' | 'ghost';
+type ButtonType = 'login' | 'auction' | 'register' | 'cancel';
 type ButtonSize = 'small' | 'medium' | 'large';
 
+const defaultLabels: Record<ButtonType, string> = {
+    login: 'ログイン',
+    register: '新規登録',
+    bid: '落札',
+    cancel: 'キャンセル',
+};
+
 interface ButtonProps {
-    label: string;
+    type: ButtonType;
+    label?: string;
     onClick?: () => void;
-    variant?: ButtonVariant;
     size?: ButtonSize;
     disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
+    type,
     label,
     onClick,
-    variant = 'primary',
     size = 'medium',
     disabled = false,
 }) => {
-    const baseClass = 'btn';
-    const variantClass = `btn-${variant}`;
+    const variantClass = {
+        login: 'btn-neutral',
+        auction: 'btn-accent',
+        register: 'btn-secondary',
+        cancel: 'btn-error',
+    }[type];
+
     const sizeClass = {
         small: 'btn-sm',
         medium: 'btn-md',
@@ -28,11 +40,11 @@ const Button: React.FC<ButtonProps> = ({
 
     return (
         <button
-            className={`${baseClass} ${variantClass} ${sizeClass}`}
+            className={`btn ${variantClass} ${sizeClass}`}
             onClick={onClick}
             disabled={disabled}
         >
-            {label}
+            {label || defaultLabels[type]}
         </button>
     );
 };
