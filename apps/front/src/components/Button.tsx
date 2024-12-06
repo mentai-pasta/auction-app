@@ -20,17 +20,18 @@ interface ButtonProps {
     disabled?: boolean;
 }
 /**
- * ボタンコンポーネント
- * @param type ボタンの種類
- * @param onClick クリック時のコールバック
- * @param size ボタンのサイズ
- * @param disabled ボタンの無効化
+ * daisyUI使用のButton
+ * 
+ * @example
+ * export default function Home() {
+ *     return (
+ *         <>
+ *             <Button type="login" disable/>
+ *         </>
+ *     );
+ * }
  */
 
-/** 
- *  <Button type="login(typeName)" onClick={() => console.log('clicked')} />
- *  
- */
 const Button: React.FC<ButtonProps> = ({
     type,
     label,
