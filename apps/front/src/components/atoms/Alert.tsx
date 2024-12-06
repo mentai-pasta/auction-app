@@ -15,7 +15,7 @@ interface AlertProps {
  * @example
  * export default function Home() {
  *     return (
- *             <Alert  type='error' abel='testText'> 
+ *             <Alert  type='alert-error' label='testText' btnType="btn-success" btnLabel="testButton" btnDisplay={false}> 
  *     );
  * }
  */
