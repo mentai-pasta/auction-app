@@ -26,10 +26,12 @@ export const Button: React.FC<ButtonProps> = ({
     onClick,
     disabled = false,
 }) => {
+    let buttonDiiabled = "";
+    buttonDiiabled = disabled ? "enabled" : "disable";
 
     return (
         <button
-            className={`btn ${btnType}`}
+            className={`btn ${btnType} ${buttonDiiabled}`}
             onClick={onClick}
             disabled={disabled}
         >
