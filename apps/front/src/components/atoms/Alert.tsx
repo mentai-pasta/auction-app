@@ -25,7 +25,7 @@ export const Alert: React.FC<AlertProps> = ({
     label,
     buttonType,
     buttonLabel,
-    buttonDisplay = 'false',
+    buttonDisplay = false,
 }) => {
     let btnHide = '';
     btnHide = buttonDisplay ? 'block' : 'hidden';
@@ -45,7 +45,7 @@ export const Alert: React.FC<AlertProps> = ({
             </svg>
             <span>{label}</span>
             <div>
-                <button className={`btn ${buttonType}`}> {buttonLabel}</button>
+                <button className={`btn ${buttonType} ${btnHide}`}> {buttonLabel}</button>
             </div>
         </div >
     );
