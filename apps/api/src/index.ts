@@ -4,6 +4,7 @@ import { OpenAPIHono } from '@hono/zod-openapi';
 import { cors } from 'hono/cors';
 import { getAuctionsHandler } from './application/controller/AuctionController.js';
 import { getAuctionRoute } from './application/routes/AuctionRoute.js';
+import { getStocksRoute } from './application/routes/StockRoute.js';
 
 const app = new OpenAPIHono();
 const api = app.basePath('/api/v1');
@@ -29,7 +30,9 @@ app.get('/ping', (c) => {
   return c.json({ message: 'Hello Hono! Status OK!' });
 });
 
-api.openapi(getAuctionRoute, getAuctionsHandler);
+api
+  .openapi(getAuctionRoute, getAuctionsHandler)
+  .openapi(getStocksRoute,);
 
 api
   .doc('/doc', {
