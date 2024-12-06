@@ -14,8 +14,8 @@ interface ButtonProps {
  * @example
  * export default function Home() {
  *     return (
- *         <>
- *             <Button label="Login" disabled />
+ *         <>      
+ *             <Button btnType='btn-warning' label="runcaaat" onClick={() => console.log('RunCat')} />
  *         </>
  *     );
  * }
@@ -26,12 +26,10 @@ export const Button: React.FC<ButtonProps> = ({
     onClick,
     disabled = false,
 }) => {
-    let buttonDiiabled = "";
-    buttonDiiabled = disabled ? "enabled" : "disable";
 
     return (
         <button
-            className={`btn ${btnType} ${buttonDiiabled}`}
+            className={`btn ${btnType}`}
             onClick={onClick}
             disabled={disabled}
         >
