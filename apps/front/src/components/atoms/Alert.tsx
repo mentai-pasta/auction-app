@@ -1,7 +1,7 @@
 import React, { InputHTMLAttributes } from 'react';
 
 interface AlertProps {
-    alertType?: 'alert-success' | 'alert-error' | 'alert-warning' | 'alert-info';
+    alertType?: 'alert' | 'alert-success' | 'alert-error' | 'alert-warning' | 'alert-info';
     label?: string;
     // daisyUIのbtnプロパティ
     btnType?: 'btn-success' | 'btn-error' | 'btn-warning' | 'btn-info';
