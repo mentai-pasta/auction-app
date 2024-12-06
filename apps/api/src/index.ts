@@ -5,6 +5,7 @@ import { cors } from 'hono/cors';
 import { getAuctionsHandler } from './application/controller/AuctionController.js';
 import { getAuctionRoute } from './application/routes/AuctionRoute.js';
 import { getStocksRoute } from './application/routes/StockRoute.js';
+import { getStocksHandler } from './application/controller/StockController.js';
 
 const app = new OpenAPIHono();
 const api = app.basePath('/api/v1');
@@ -32,7 +33,7 @@ app.get('/ping', (c) => {
 
 api
   .openapi(getAuctionRoute, getAuctionsHandler)
-  .openapi(getStocksRoute,);
+  .openapi(getStocksRoute, getStocksHandler);
 
 api
   .doc('/doc', {

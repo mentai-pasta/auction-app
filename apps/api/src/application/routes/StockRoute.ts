@@ -1,6 +1,5 @@
 import { createRoute } from '@hono/zod-openapi';
-import { AuctionListSchema, AuctionQueryParamSchema } from '../schemas/AuctionSchema.js';
-import { StockQuerySchema ,StockResponseSchema} from '../schemas/StockSchema.js';
+import { StockListResponseSchema, StockQuerySchema } from '../schemas/StockSchema.js';
 
 export const getStocksRoute = createRoute({
   method: 'get',
@@ -12,7 +11,7 @@ export const getStocksRoute = createRoute({
       description: 'OK',
       content: {
         'application/json': {
-          schema: StockResponseSchema,
+          schema: StockListResponseSchema,
         },
       },
     },
