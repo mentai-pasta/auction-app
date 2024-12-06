@@ -1,10 +1,10 @@
 import React, { InputHTMLAttributes } from 'react';
 
 interface AlertProps {
-    alertType?: 'success' | 'error' | 'warning' | 'info';
+    alertType?: 'alert-success' | 'alert-error' | 'alert-warning' | 'alert-info';
     label?: string;
     // daisyUIのbtnプロパティ
-    buttonType?: 'success' | 'error' | 'warning' | 'info';
+    buttonType?: 'btn-success' | 'btn-error' | 'btn-warning' | 'btn-info';
     buttonLabel?: string;
     buttonDisplay?: boolean;
 };
@@ -27,15 +27,11 @@ export const Alert: React.FC<AlertProps> = ({
     buttonLabel,
     buttonDisplay = 'false',
 }) => {
-    let varriantAlertClass = '';
-    varriantAlertClass = alertType ? 'alert alert-' + alertType : 'alert alert-success';
-    let varriantButtonClass = '';
-    varriantButtonClass = buttonType ? 'btn btn-' + buttonType : 'btn btn-success';
     let btnHide = '';
     btnHide = buttonDisplay ? 'block' : 'hidden';
 
     return (
-        <div role='alert' className={`${varriantAlertClass}`}>
+        <div role='alert' className={`alert ${alertType}`}>
             <svg
                 xmlns='http://www.w3.org/2000/svg'
                 className='h-6 w-6 shrink-0 stroke-current'
@@ -49,7 +45,7 @@ export const Alert: React.FC<AlertProps> = ({
             </svg>
             <span>{label}</span>
             <div>
-                <button className={`${varriantButtonClass}`}> {buttonLabel}</button>
+                <button className={`btn ${buttonType}`}> {buttonLabel}</button>
             </div>
         </div >
     );
