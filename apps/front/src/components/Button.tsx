@@ -19,7 +19,18 @@ interface ButtonProps {
     size?: ButtonSize;
     disabled?: boolean;
 }
+/**
+ * ボタンコンポーネント
+ * @param type ボタンの種類
+ * @param onClick クリック時のコールバック
+ * @param size ボタンのサイズ
+ * @param disabled ボタンの無効化
+ */
 
+/** 
+ *  <Button type="login(typeName)" onClick={() => console.log('clicked')} />
+ *  
+ */
 const Button: React.FC<ButtonProps> = ({
     type,
     label,
