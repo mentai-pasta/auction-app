@@ -4,9 +4,9 @@ interface AlertProps {
     alertType?: 'alert-success' | 'alert-error' | 'alert-warning' | 'alert-info';
     label?: string;
     // daisyUIのbtnプロパティ
-    buttonType?: 'btn-success' | 'btn-error' | 'btn-warning' | 'btn-info';
-    buttonLabel?: string;
-    buttonDisplay?: boolean;
+    btnType?: 'btn-success' | 'btn-error' | 'btn-warning' | 'btn-info';
+    btnLabel?: string;
+    btnDisplay?: boolean;
 };
 
 /**
@@ -23,12 +23,12 @@ interface AlertProps {
 export const Alert: React.FC<AlertProps> = ({
     alertType,
     label,
-    buttonType,
-    buttonLabel,
-    buttonDisplay = false,
+    btnType,
+    btnLabel,
+    btnDisplay = false,
 }) => {
     let btnHide = '';
-    btnHide = buttonDisplay ? 'block' : 'hidden';
+    btnHide = btnDisplay ? 'block' : 'hidden';
 
     return (
         <div role='alert' className={`alert ${alertType}`}>
@@ -45,7 +45,7 @@ export const Alert: React.FC<AlertProps> = ({
             </svg>
             <span>{label}</span>
             <div>
-                <button className={`btn ${buttonType} ${btnHide}`}> {buttonLabel}</button>
+                <button className={`btn ${btnType} ${btnHide}`}> {btnLabel}</button>
             </div>
         </div >
     );
