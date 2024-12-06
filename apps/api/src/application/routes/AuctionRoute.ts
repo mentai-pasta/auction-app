@@ -1,5 +1,6 @@
 import { createRoute } from '@hono/zod-openapi';
 import { AuctionListSchema, AuctionQueryParamSchema } from '../schemas/AuctionSchema.js';
+import { StockIdParamSchema } from '../schemas/StockSchema.js';
 
 export const getAuctionRoute = createRoute({
   method: 'get',
@@ -17,3 +18,19 @@ export const getAuctionRoute = createRoute({
     },
   },
 });
+export const getAuction1item = createRoute({
+  method: 'get',
+  path: '/stocks/{stock_id}',
+  description: '商品一件を取得する',
+  request: { query: StockIdParamSchema },
+  responses: {
+    200: {
+      description: 'OK',
+      content: {
+        'application/json': {
+          schema: StockRsponseSchema,
+        },
+      },
+    },
+  },
+})

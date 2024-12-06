@@ -19,3 +19,10 @@ export const StockSchema = z.object({
 });
 
 export const StockListSchema = z.array(StockSchema).openapi('StockListSchema');
+
+export const StockIdParamSchema = z.object({
+  stock_id: z
+    .string()
+    .uuid()
+    .openapi({ example: '7996ba52-eb36-09da-a21a-978e6cae937f' }),
+});
