@@ -7,6 +7,7 @@ interface AlertProps {
     btnType?: 'btn-success' | 'btn-error' | 'btn-warning' | 'btn-info';
     btnLabel?: string;
     btnDisplay?: boolean;
+    onClick?: () => void;
 };
 
 /**
@@ -26,6 +27,7 @@ export const Alert: React.FC<AlertProps> = ({
     btnType,
     btnLabel,
     btnDisplay = false,
+    onClick,
 }) => {
     let btnHide = '';
     btnHide = btnDisplay ? 'block' : 'hidden';
@@ -45,7 +47,7 @@ export const Alert: React.FC<AlertProps> = ({
             </svg>
             <span>{label}</span>
             <div>
-                <button className={`btn ${btnType} ${btnHide}`}> {btnLabel}</button>
+                <button className={`btn ${btnType} ${btnHide}`} onClick={onClick}> {btnLabel}</button>
             </div>
         </div >
     );
