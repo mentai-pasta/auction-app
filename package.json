@@ -8,7 +8,8 @@
     "start": "turbo start",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "turbo format"
+    "format": "turbo format",
+    "init": "turbo init"
   },
   "keywords": [],
   "author": "",
