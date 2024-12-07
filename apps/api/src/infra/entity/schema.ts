@@ -35,15 +35,13 @@ export const series = pgTable(
     name: varchar({ length: 255 }).notNull(),
     manufacturerId: uuid('manufacturer_id').notNull(),
   },
-  (table) => {
-    return {
-      seriesManufacturerIdFkey: foreignKey({
-        columns: [table.manufacturerId],
-        foreignColumns: [manufacturers.manufacturerId],
-        name: 'series_manufacturer_id_fkey',
-      }),
-    };
-  },
+  (table) => [
+    foreignKey({
+      columns: [table.manufacturerId],
+      foreignColumns: [manufacturers.manufacturerId],
+      name: 'series_manufacturer_id_fkey',
+    }),
+  ],
 );
 
 export const manufacturers = pgTable('manufacturers', {
@@ -58,15 +56,13 @@ export const employees = pgTable(
     name: varchar({ length: 255 }).notNull(),
     jobTypeId: uuid('job_type_id').notNull(),
   },
-  (table) => {
-    return {
-      employeesJobTypeIdFkey: foreignKey({
-        columns: [table.jobTypeId],
-        foreignColumns: [jobTypes.jobTypeId],
-        name: 'employees_job_type_id_fkey',
-      }),
-    };
-  },
+  (table) => [
+    foreignKey({
+      columns: [table.jobTypeId],
+      foreignColumns: [jobTypes.jobTypeId],
+      name: 'employees_job_type_id_fkey',
+    }),
+  ],
 );
 
 export const auctions = pgTable(
@@ -83,15 +79,13 @@ export const auctions = pgTable(
     duration: interval().notNull(),
     beginTime: timestamp('begin_time', { mode: 'string' }).notNull(),
   },
-  (table) => {
-    return {
-      auctionsEmployeeIdFkey: foreignKey({
-        columns: [table.employeeId],
-        foreignColumns: [employees.employeeId],
-        name: 'auctions_employee_id_fkey',
-      }),
-    };
-  },
+  (table) => [
+    foreignKey({
+      columns: [table.employeeId],
+      foreignColumns: [employees.employeeId],
+      name: 'auctions_employee_id_fkey',
+    }),
+  ],
 );
 
 export const stocks = pgTable(
@@ -109,25 +103,23 @@ export const stocks = pgTable(
     soldStatusId: uuid('sold_status_id').notNull(),
     beginTime: timestamp('begin_time', { mode: 'string' }).notNull(),
   },
-  (table) => {
-    return {
-      stocksAuctionIdFkey: foreignKey({
-        columns: [table.auctionId],
-        foreignColumns: [auctions.auctionId],
-        name: 'stocks_auction_id_fkey',
-      }),
-      stocksVehicleIdFkey: foreignKey({
-        columns: [table.vehicleId],
-        foreignColumns: [vehicles.vehicleId],
-        name: 'stocks_vehicle_id_fkey',
-      }),
-      stocksSoldStatusIdFkey: foreignKey({
-        columns: [table.soldStatusId],
-        foreignColumns: [soldStatuses.soldStatusId],
-        name: 'stocks_sold_status_id_fkey',
-      }),
-    };
-  },
+  (table) => [
+    foreignKey({
+      columns: [table.auctionId],
+      foreignColumns: [auctions.auctionId],
+      name: 'stocks_auction_id_fkey',
+    }),
+    foreignKey({
+      columns: [table.vehicleId],
+      foreignColumns: [vehicles.vehicleId],
+      name: 'stocks_vehicle_id_fkey',
+    }),
+    foreignKey({
+      columns: [table.soldStatusId],
+      foreignColumns: [soldStatuses.soldStatusId],
+      name: 'stocks_sold_status_id_fkey',
+    }),
+  ],
 );
 
 export const vehicles = pgTable(
@@ -143,20 +135,18 @@ export const vehicles = pgTable(
     seriesId: uuid('series_id').notNull(),
     employeeId: uuid('employee_id').notNull(),
   },
-  (table) => {
-    return {
-      vehiclesSeriesIdFkey: foreignKey({
-        columns: [table.seriesId],
-        foreignColumns: [series.seriesId],
-        name: 'vehicles_series_id_fkey',
-      }),
-      vehiclesEmployeeIdFkey: foreignKey({
-        columns: [table.employeeId],
-        foreignColumns: [employees.employeeId],
-        name: 'vehicles_employee_id_fkey',
-      }),
-    };
-  },
+  (table) => [
+    foreignKey({
+      columns: [table.seriesId],
+      foreignColumns: [series.seriesId],
+      name: 'vehicles_series_id_fkey',
+    }),
+    foreignKey({
+      columns: [table.employeeId],
+      foreignColumns: [employees.employeeId],
+      name: 'vehicles_employee_id_fkey',
+    }),
+  ],
 );
 
 export const notifications = pgTable(
@@ -175,20 +165,18 @@ export const notifications = pgTable(
     deploySchedule: timestamp('deploy_schedule', { mode: 'string' }),
     deployStatusId: uuid('deploy_status_id'),
   },
-  (table) => {
-    return {
-      notificationsEmployeeIdFkey: foreignKey({
-        columns: [table.employeeId],
-        foreignColumns: [employees.employeeId],
-        name: 'notifications_employee_id_fkey',
-      }),
-      notificationsDeployStatusIdFkey: foreignKey({
-        columns: [table.deployStatusId],
-        foreignColumns: [deployStatuses.deployStatusId],
-        name: 'notifications_deploy_status_id_fkey',
-      }),
-    };
-  },
+  (table) => [
+    foreignKey({
+      columns: [table.employeeId],
+      foreignColumns: [employees.employeeId],
+      name: 'notifications_employee_id_fkey',
+    }),
+    foreignKey({
+      columns: [table.deployStatusId],
+      foreignColumns: [deployStatuses.deployStatusId],
+      name: 'notifications_deploy_status_id_fkey',
+    }),
+  ],
 );
 
 export const contacts = pgTable(
@@ -206,20 +194,18 @@ export const contacts = pgTable(
       sql`CURRENT_TIMESTAMP`,
     ),
   },
-  (table) => {
-    return {
-      contactsEmployeeIdFkey: foreignKey({
-        columns: [table.employeeId],
-        foreignColumns: [employees.employeeId],
-        name: 'contacts_employee_id_fkey',
-      }),
-      contactsCustomerIdFkey: foreignKey({
-        columns: [table.customerId],
-        foreignColumns: [customers.customerId],
-        name: 'contacts_customer_id_fkey',
-      }),
-    };
-  },
+  (table) => [
+    foreignKey({
+      columns: [table.employeeId],
+      foreignColumns: [employees.employeeId],
+      name: 'contacts_employee_id_fkey',
+    }),
+    foreignKey({
+      columns: [table.customerId],
+      foreignColumns: [customers.customerId],
+      name: 'contacts_customer_id_fkey',
+    }),
+  ],
 );
 
 export const jobTypes = pgTable('job_types', {
@@ -248,20 +234,18 @@ export const bids = pgTable(
       sql`CURRENT_TIMESTAMP`,
     ),
   },
-  (table) => {
-    return {
-      bidsStockIdFkey: foreignKey({
-        columns: [table.stockId],
-        foreignColumns: [stocks.stockId],
-        name: 'bids_stock_id_fkey',
-      }),
-      bidsCustomerIdFkey: foreignKey({
-        columns: [table.customerId],
-        foreignColumns: [customers.customerId],
-        name: 'bids_customer_id_fkey',
-      }),
-    };
-  },
+  (table) => [
+    foreignKey({
+      columns: [table.stockId],
+      foreignColumns: [stocks.stockId],
+      name: 'bids_stock_id_fkey',
+    }),
+    foreignKey({
+      columns: [table.customerId],
+      foreignColumns: [customers.customerId],
+      name: 'bids_customer_id_fkey',
+    }),
+  ],
 );
 
 export const images = pgTable(
@@ -270,11 +254,7 @@ export const images = pgTable(
     imageId: uuid('image_id').defaultRandom().notNull(),
     url: varchar({ length: 255 }).notNull(),
   },
-  (table) => {
-    return {
-      imagesImageIdKey: unique('images_image_id_key').on(table.imageId),
-    };
-  },
+  (table) => [unique('images_image_id_key').on(table.imageId)],
 );
 
 export const imagesStocks = pgTable(
@@ -283,20 +263,18 @@ export const imagesStocks = pgTable(
     imageId: uuid('image_id').notNull(),
     stockId: uuid('stock_id').notNull(),
   },
-  (table) => {
-    return {
-      imagesStocksImageIdFkey: foreignKey({
-        columns: [table.imageId],
-        foreignColumns: [images.imageId],
-        name: 'images_stocks_image_id_fkey',
-      }),
-      imagesStocksStockIdFkey: foreignKey({
-        columns: [table.stockId],
-        foreignColumns: [stocks.stockId],
-        name: 'images_stocks_stock_id_fkey',
-      }),
-    };
-  },
+  (table) => [
+    foreignKey({
+      columns: [table.imageId],
+      foreignColumns: [images.imageId],
+      name: 'images_stocks_image_id_fkey',
+    }),
+    foreignKey({
+      columns: [table.stockId],
+      foreignColumns: [stocks.stockId],
+      name: 'images_stocks_stock_id_fkey',
+    }),
+  ],
 );
 
 export const seriesRelations = relations(series, ({ one, many }) => ({
