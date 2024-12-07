@@ -57,7 +57,8 @@ app.get('/ws/:stock_id', async (c, next) => {
   })(c, next);
 });
 
-api
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const route = app
   .openapi(getAuctionsRoute, getAuctionsHandler)
   .openapi(getAuctionByIdRoute, getAuctionByIdHandler)
   .openapi(postBidRoute, postBidHandler);
@@ -81,3 +82,5 @@ const server = serve({
 });
 
 injectWebSocket(server);
+
+export type ApiType = typeof route;
