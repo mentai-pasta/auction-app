@@ -2,7 +2,7 @@ import type { WSContext, WSEvents } from 'hono/ws';
 
 export const ws_stocks = new Map();
 
-export const WebSocketHandler = (stock_id: string): WSEvents => {
+export const WebSocketHandler = (stock_id: string, success: boolean): WSEvents => {
   if (!ws_stocks.has(stock_id)) {
     ws_stocks.set(stock_id, new Set<WSContext>());
   }
@@ -10,6 +10,11 @@ export const WebSocketHandler = (stock_id: string): WSEvents => {
 
   const ws: WSEvents = {
     onOpen(_event, socket) {
+      if (!success) {
+        console.log('Invalid stock_id');
+        socket.close(1008, "Invalid stock_id");
+        return;
+      }
       ws_stock.add(socket);
       console.log(`Client connected to: ${stock_id}`);
     },

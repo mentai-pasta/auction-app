@@ -46,13 +46,8 @@ app.get('/ws/:stock_id', async (c, next) => {
   const stock_id = c.req.param('stock_id');
   const result = StockIdSchema.safeParse({ stock_id });
 
-  if (!result.success) {
-    console.log('Invalid stock_id');
-    return c.json({ message: 'Invalid stock_id' }, 400);
-  }
-
   return upgradeWebSocket(() => {
-    const ws = WebSocketHandler(stock_id);
+    const ws = WebSocketHandler(stock_id, result.success);
     return ws;
   })(c, next);
 });
