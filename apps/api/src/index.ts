@@ -6,10 +6,12 @@ import {
   getAuctionByIdHandler,
   getAuctionsHandler,
 } from './application/controller/AuctionController.js';
+import { postBidHandler } from './application/controller/BidController.js';
 import {
   getAuctionByIdRoute,
   getAuctionsRoute,
 } from './application/routes/AuctionRoute.js';
+import { postBidRoute } from './application/routes/BidRoute.js';
 
 const app = new OpenAPIHono();
 const api = app.basePath('/api/v1');
@@ -37,7 +39,8 @@ app.get('/ping', (c) => {
 
 api
   .openapi(getAuctionsRoute, getAuctionsHandler)
-  .openapi(getAuctionByIdRoute, getAuctionByIdHandler);
+  .openapi(getAuctionByIdRoute, getAuctionByIdHandler)
+  .openapi(postBidRoute, postBidHandler);
 
 api
   .doc('/doc', {
