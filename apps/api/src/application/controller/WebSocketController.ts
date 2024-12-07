@@ -12,7 +12,7 @@ export const WebSocketHandler = (stock_id: string, success: boolean): WSEvents =
     onOpen(_event, socket) {
       if (!success) {
         console.log('Invalid stock_id');
-        socket.close(1008, "Invalid stock_id");
+        socket.close(1008, 'Invalid stock_id');
         return;
       }
       ws_stock.add(socket);
