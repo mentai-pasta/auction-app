@@ -41,12 +41,15 @@ export class BidRepository {
   async getMaxBidPrice(stock_id: string) {
     return await db.transaction(async (trx) => {
       const result = await trx
-        .select({ value: max(bids.price) })
+        .select({ customerId: bids.customerId, max_price: max(bids.price) })
         .from(bids)
-        .where(eq(bids.stockId, stock_id));
-      const max_bid = result[0].value;
-      console.log('max_bid:', max_bid);
-      return max_bid;
+        .where(eq(bids.stockId, stock_id))
+        .groupBy(bids.customerId);
+      const response = {
+        customer_id: result[0].customerId,
+        max_price: result[0].max_price,
+      };
+      return response;
     });
   }
 }
