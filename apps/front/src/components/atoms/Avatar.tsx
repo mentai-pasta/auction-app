@@ -1,46 +1,49 @@
-import React, { InputHTMLAttributes } from "react";
+import Image from 'next/image';
+import React from 'react';
 
 interface AvatarProps {
-    imageUrl?: string;
-    online?: boolean;
-    placeholder?: string;
-    rounded?: boolean;
-};
+  imageUrl?: string;
+  online?: boolean;
+  placeholder?: string;
+  rounded?: boolean;
+}
 
 /**
  * daisyUI使用のAvatar
- * 
+ *
  * @example
  * export default function Home() {
  *     return (
  *         <>
- *             <Avatar 
+ *             <Avatar
  *                 online=true
  *                 placeholder="Jimbo"/>
  *         </>
  *     );
  * }
  */
-export const Avatar: React.FC<AvatarProps> = ({ 
-    online,
-    placeholder,
-    imageUrl,
-    rounded = false
+export const Avatar: React.FC<AvatarProps> = ({
+  online,
+  placeholder,
+  imageUrl,
+  rounded = false,
 }) => {
-    let onlineClass = '';
-    if (online != null) {
-        onlineClass = online? 'online' :'offline';
-    }
+  let onlineClass = '';
+  if (online != null) {
+    onlineClass = online ? 'online' : 'offline';
+  }
 
-    return (
-        <div className={`avatar ${onlineClass} ${placeholder? 'placeholder': ''}`}>
-            <div className={`bg-neutral text-neutral-content w-16 rounded-full ${rounded? 'rounded-full': 'rounded-md'}`}>
-                {placeholder? (
-                    <span className={`text-xl text-white`}>{placeholder}</span>
-                ): (
-                    <img src={imageUrl} alt="" />
-                )}
-            </div>
-        </div>
-    );
-}
+  return (
+    <div className={`avatar ${onlineClass} ${placeholder ? 'placeholder' : ''}`}>
+      <div
+        className={`bg-neutral text-neutral-content w-16 rounded-full ${rounded ? 'rounded-full' : 'rounded-md'}`}
+      >
+        {placeholder !== undefined || imageUrl === undefined ? (
+          <span className={`text-xl text-white`}>{placeholder}</span>
+        ) : (
+          <Image src={imageUrl} alt="" />
+        )}
+      </div>
+    </div>
+  );
+};
