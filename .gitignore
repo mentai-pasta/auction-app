@@ -45,4 +45,3 @@ next-env.d.ts
 
 # output
 **/.dist
-**/drizzle
