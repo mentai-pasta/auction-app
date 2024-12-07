@@ -9,12 +9,14 @@ import {
   getAuctionsHandler,
 } from './application/controller/AuctionController.js';
 import { postBidHandler } from './application/controller/BidController.js';
+import { postLoginHandler } from './application/controller/LoginController.js';
 import { WebSocketHandler } from './application/controller/WebSocketController.js';
 import {
   getAuctionByIdRoute,
   getAuctionsRoute,
 } from './application/routes/AuctionRoute.js';
 import { postBidRoute } from './application/routes/BidRoute.js';
+import { postLoginRoute } from './application/routes/LoginRoute.js';
 import { StockIdSchema } from './application/schemas/StockSchema.js';
 
 const app = new OpenAPIHono();
@@ -57,6 +59,7 @@ const route = app
   .openapi(getAuctionsRoute, getAuctionsHandler)
   .openapi(getAuctionByIdRoute, getAuctionByIdHandler)
   .openapi(postBidRoute, postBidHandler)
+  .openapi(postLoginRoute, postLoginHandler)
   .doc('/doc', {
     openapi: '3.0.0',
     info: {
