@@ -18,7 +18,6 @@ import { postBidRoute } from './application/routes/BidRoute.js';
 import { StockIdSchema } from './application/schemas/StockSchema.js';
 
 const app = new OpenAPIHono();
-const api = app.basePath('/api/v1');
 const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app: app as Hono });
 
 app.use(
@@ -54,11 +53,10 @@ app.get('/ws/:stock_id', async (c, next) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const route = app
+  .basePath('/api/v1')
   .openapi(getAuctionsRoute, getAuctionsHandler)
   .openapi(getAuctionByIdRoute, getAuctionByIdHandler)
-  .openapi(postBidRoute, postBidHandler);
-
-api
+  .openapi(postBidRoute, postBidHandler)
   .doc('/doc', {
     openapi: '3.0.0',
     info: {
