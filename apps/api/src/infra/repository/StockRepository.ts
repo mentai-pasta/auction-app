@@ -1,7 +1,10 @@
 import { z } from '@hono/zod-openapi';
 import type { SQLWrapper } from 'drizzle-orm';
 import { and, eq } from 'drizzle-orm';
-import { StockQuerySchema } from '../../application/schemas/StockSchema.js';
+import {
+  StockIdSchema,
+  StockQuerySchema,
+} from '../../application/schemas/StockSchema.js';
 import {
   manufacturers,
   series,
@@ -11,6 +14,7 @@ import {
 } from '../entity/schema.js';
 import { db } from '../helper/db.js';
 type StockQuerySchema = z.infer<typeof StockQuerySchema>;
+type StockIdSchema = z.infer<typeof StockIdSchema>;
 
 export class StockRepository {
   // 商品一覧取得
@@ -49,6 +53,27 @@ export class StockRepository {
     }
 
     const result = await qb.execute();
+
+    return result;
+  }
+
+  // 商品一件取得
+  async getStockById(path: StockIdSchema) {
+    const result = await db.query.stocks.findFirst({
+      with: {
+        soldStatus: true,
+        vehicle: {
+          with: {
+            series: {
+              with: {
+                manufacturer: true,
+              },
+            },
+          },
+        },
+      },
+      where: eq(stocks.stockId, path.stock_id),
+    });
 
     return result;
   }
