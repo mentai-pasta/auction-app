@@ -12,18 +12,18 @@ export const getStocksHandler: RouteHandler<typeof getStocksRoute> = async (c) =
 
   const stocklist: StockListResponseSchema = (await result).map((stock) => {
     return {
-      stock_id: stock.stockId,
-      auction_id: stock.auctionId,
-      vehicle_id: stock.vehicleId,
-      series_id: stock.vehicle.seriesId,
-      series_name: stock.vehicle.series.name,
-      manufacturer_id: stock.vehicle.series.manufacturerId,
-      manufacturer_name: stock.vehicle.series.manufacturer.name,
-      sold_status_id: stock.soldStatusId,
-      sold_states_name: stock.soldStatus.name,
-      begin_date: stock.beginTime,
-      created_at: stock.createdAt,
-      updated_at: stock.updatedAt,
+      stock_id: stock.stocks.stockId,
+      auction_id: stock.stocks.auctionId,
+      vehicle_id: stock.stocks.vehicleId,
+      series_id: stock.series.seriesId,
+      series_name: stock.series.name,
+      manufacturer_id: stock.series.manufacturerId,
+      manufacturer_name: stock.manufacturers.name,
+      sold_status_id: stock.sold_statuses.soldStatusId,
+      sold_states_name: stock.sold_statuses.name,
+      begin_date: stock.stocks.beginTime,
+      created_at: stock.stocks.createdAt,
+      updated_at: stock.stocks.updatedAt,
     };
   });
 
