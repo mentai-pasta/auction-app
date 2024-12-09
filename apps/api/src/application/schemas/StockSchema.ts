@@ -95,7 +95,7 @@ export const StockResponseSchema = z.object({
     .string()
     .uuid()
     .openapi({ example: '5e1a6f97-72b8-81fa-2e7d-39cc54d982d4' }),
-  sold_states_name: z.string().uuid().openapi({ example: '入札開始前' }),
+  sold_status_name: z.string().uuid().openapi({ example: '入札開始前' }),
   begin_date: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
   created_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
   updated_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),

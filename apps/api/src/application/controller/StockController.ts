@@ -21,7 +21,7 @@ export const getStocksHandler: RouteHandler<typeof getStocksRoute> = async (c) =
       manufacturer_id: stock.series.manufacturerId,
       manufacturer_name: stock.manufacturers.name,
       sold_status_id: stock.sold_statuses.soldStatusId,
-      sold_states_name: stock.sold_statuses.name,
+      sold_status_name: stock.sold_statuses.name,
       begin_date: stock.stocks.beginTime,
       created_at: stock.stocks.createdAt,
       updated_at: stock.stocks.updatedAt,
