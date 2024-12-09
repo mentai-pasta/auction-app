@@ -38,6 +38,7 @@ export const StockSchema = z.object({
   updated_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
 });
 
+// 商品一覧取得用クエリスキーマ
 export const StockQuerySchema = z.object({
   auction_id: z
     .string()
@@ -66,6 +67,7 @@ export const StockQuerySchema = z.object({
     .openapi({ example: '5' }),
 });
 
+// 商品一覧取得用レスポンススキーマ
 export const StockResponseSchema = z.object({
   stock_id: z
     .string()

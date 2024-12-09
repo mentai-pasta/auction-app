@@ -4,6 +4,7 @@ import { StockRepository } from '../../infra/repository/StockRepository.js';
 import { StockListResponseSchema } from '../schemas/StockSchema.js';
 type StockListResponseSchema = z.infer<typeof StockListResponseSchema>;
 
+// 商品一覧取得用ハンドラ
 export const getStocksHandler: RouteHandler<typeof getStocksRoute> = async (c) => {
   const query = c.req.valid('query');
 

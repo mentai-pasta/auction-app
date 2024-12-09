@@ -13,6 +13,7 @@ import { db } from '../helper/db.js';
 type StockQuerySchema = z.infer<typeof StockQuerySchema>;
 
 export class StockRepository {
+  // 商品一覧取得
   async getStocks(query: StockQuerySchema) {
     const { auction_id, sold_status_id, series_id, manufacturer_id, limit } = query;
     const filters: SQLWrapper[] = [];
