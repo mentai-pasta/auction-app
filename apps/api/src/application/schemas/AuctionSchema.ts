@@ -1,6 +1,7 @@
 import { z } from '@hono/zod-openapi';
-import { StockListSchema } from './StockSchema.js';
+import { StockIdListSchema, StockListSchema } from './StockSchema.js';
 
+// オークション一覧取得用クエリパラメータ
 export const AuctionQueryParamSchema = z.object({
   start_date: z
     .string()
@@ -41,7 +42,40 @@ export const AuctionQueryParamSchema = z.object({
     }),
 });
 
+// オークション一覧取得用レスポンス
 export const AuctionSchema = z.object({
+  auction_id: z
+    .string()
+    .uuid()
+    .openapi({ example: '07c3ce66-bda2-4e10-3752-8665cd96b26d' }),
+  stock_list: StockIdListSchema,
+  duration: z
+    .number()
+    .int()
+    .positive()
+    .openapi({ example: 30, description: '商品の制限時間（分）' }),
+  begin_date: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
+  created_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
+  updated_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
+});
+
+// オークション1件取得用パラメータ
+export const AuctionIdParamSchema = z.object({
+  auction_id: z
+    .string()
+    .uuid()
+    .openapi({
+      param: {
+        name: 'auction_id',
+        in: 'path',
+        example: '07c3ce66-bda2-4e10-3752-8665cd96b26d',
+        description: 'オークションID: UUID',
+      },
+    }),
+});
+
+// オークション一件取得用レスポンス
+export const AuctionDetailSchema = z.object({
   auction_id: z
     .string()
     .uuid()
@@ -53,6 +87,9 @@ export const AuctionSchema = z.object({
     .positive()
     .openapi({ example: 30, description: '商品の制限時間（分）' }),
   begin_date: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
+  created_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
+  updated_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
 });
 
+// スキーマのリスト定義
 export const AuctionListSchema = z.array(AuctionSchema).openapi('AuctionListSchema');
