@@ -4,14 +4,16 @@ import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
-import { getStocksRoute } from './application/routes/StockRoute.js';
-import { getStocksHandler } from './application/controller/StockController.js';
 import {
   getAuctionByIdHandler,
   getAuctionsHandler,
 } from './application/controller/AuctionController.js';
 import { postBidHandler } from './application/controller/BidController.js';
 import { postLoginHandler } from './application/controller/LoginController.js';
+import {
+  getStockByIdHandler,
+  getStocksHandler,
+} from './application/controller/StockController.js';
 import { WebSocketHandler } from './application/controller/WebSocketController.js';
 import {
   getAuctionByIdRoute,
@@ -19,6 +21,7 @@ import {
 } from './application/routes/AuctionRoute.js';
 import { postBidRoute } from './application/routes/BidRoute.js';
 import { postLoginRoute } from './application/routes/LoginRoute.js';
+import { getStockByIdRoute, getStocksRoute } from './application/routes/StockRoute.js';
 import { StockIdSchema } from './application/schemas/StockSchema.js';
 
 const app = new OpenAPIHono();
@@ -61,6 +64,7 @@ const route = app
   .openapi(getAuctionsRoute, getAuctionsHandler)
   .openapi(getAuctionByIdRoute, getAuctionByIdHandler)
   .openapi(getStocksRoute, getStocksHandler)
+  .openapi(getStockByIdRoute, getStockByIdHandler)
   .openapi(postBidRoute, postBidHandler)
   .openapi(postLoginRoute, postLoginHandler)
   .doc('/doc', {
