@@ -1,18 +1,26 @@
 import { serve } from '@hono/node-server';
+import { createNodeWebSocket } from '@hono/node-ws';
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
+import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import {
   getAuctionByIdHandler,
   getAuctionsHandler,
 } from './application/controller/AuctionController.js';
+import { postBidHandler } from './application/controller/BidController.js';
+import { postLoginHandler } from './application/controller/LoginController.js';
+import { WebSocketHandler } from './application/controller/WebSocketController.js';
 import {
   getAuctionByIdRoute,
   getAuctionsRoute,
 } from './application/routes/AuctionRoute.js';
+import { postBidRoute } from './application/routes/BidRoute.js';
+import { postLoginRoute } from './application/routes/LoginRoute.js';
+import { StockIdSchema } from './application/schemas/StockSchema.js';
 
 const app = new OpenAPIHono();
-const api = app.basePath('/api/v1');
+const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app: app as Hono });
 
 app.use(
   '*',
@@ -35,11 +43,23 @@ app.get('/ping', (c) => {
   return c.json({ message: 'Hello Hono! Status OK!' });
 });
 
-api
-  .openapi(getAuctionsRoute, getAuctionsHandler)
-  .openapi(getAuctionByIdRoute, getAuctionByIdHandler);
+app.get('/ws/:stock_id', async (c, next) => {
+  const stock_id = c.req.param('stock_id');
+  const result = StockIdSchema.safeParse({ stock_id });
 
-api
+  return upgradeWebSocket(() => {
+    const ws = WebSocketHandler(stock_id, result.success);
+    return ws;
+  })(c, next);
+});
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const route = app
+  .basePath('/api/v1')
+  .openapi(getAuctionsRoute, getAuctionsHandler)
+  .openapi(getAuctionByIdRoute, getAuctionByIdHandler)
+  .openapi(postBidRoute, postBidHandler)
+  .openapi(postLoginRoute, postLoginHandler)
   .doc('/doc', {
     openapi: '3.0.0',
     info: {
@@ -52,7 +72,11 @@ api
 const port = 3001;
 console.log(`Server is running on http://localhost:${port}`);
 
-serve({
+const server = serve({
   fetch: app.fetch,
   port,
 });
+
+injectWebSocket(server);
+
+export type ApiType = typeof route;
