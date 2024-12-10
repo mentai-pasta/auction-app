@@ -30,7 +30,7 @@ export const Timer = ({
   onFinish,
   onStart,
 }: TimerProps) => {
-  const [remain, setRemain] = useState<string>('loading');
+  const [remain, setRemain] = useState<string | undefined>();
   const beginTimeDayJs = dayjs(startTime);
   const endTimeDayJs = dayjs(endTime);
   const isStartedRef = useRef(
@@ -61,5 +61,9 @@ export const Timer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <p className="text-5xl">{remain}</p>;
+  return (
+    <p className="text-5xl">
+      {remain ?? <span className="loading loading-dots loading-lg" />}
+    </p>
+  );
 };
