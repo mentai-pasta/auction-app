@@ -11,7 +11,6 @@ export const getStocksHandler: RouteHandler<typeof getStocksRoute> = async (c) =
   const Stock = new StockRepository();
   const result = await Stock.getStocks(query);
 
-  console.log(result);
   const stocklist: StockListResponseSchema = result.map((stock) => {
     return {
       stock_id: stock.stockId,
