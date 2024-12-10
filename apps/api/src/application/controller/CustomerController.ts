@@ -1,4 +1,5 @@
 import { type RouteHandler } from '@hono/zod-openapi';
+import { loginToken } from '../../infra/helper/jwt.js';
 import { CustomerRepository } from '../../infra/repository/CustomerRepository.js';
 import { postCustomerRoute } from '../routes/CustomerRoute.js';
 
@@ -9,12 +10,12 @@ export const postCustomerHandler: RouteHandler<typeof postCustomerRoute> = async
   try {
     const Customer = new CustomerRepository();
     const result = await Customer.createCustomer(json);
+    const token = await loginToken(result.customer_id, result.name, result.email);
 
     return c.json(
       {
-        customer_id: result.customer_id,
-        name: result.name,
-        email: result.email,
+        message: 'Success',
+        token: token,
       },
       200,
     );

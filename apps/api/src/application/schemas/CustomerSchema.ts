@@ -39,10 +39,9 @@ export const PostCustomerBodySchema = z.object({
 });
 
 export const PostCustomerResponseSchema = z.object({
-  customer_id: z
-    .string()
-    .uuid()
-    .openapi({ example: 'fdd25989-085e-fc11-31f0-a4a25095a47d' }),
-  name: z.string().openapi({ example: '波留太郎' }),
-  email: z.string().email().openapi({ example: 'sample@email.com' }),
+  message: z.string().openapi({ example: 'Success' }),
+  token: z.string().openapi({
+    example:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0b21lcl9pZCI6ImZkZDI1OTg5LTA4NWUtZmMxMS0zMWYwLWE0YTI1MDk1YTQ3ZCIsImN1c3RvbWVyX25hbWUiOiLms6LnlZnlpKrpg44iLCJlbWFpbCI6InNhbXBsZTFAZ21haWwuY29tIiwiZXhwIjoxNzMzNTc4ODAwfQ.30fV5Vj7ZMYj7F3c_Kc45bsgbVpuj6KH0YSA2vio8ys',
+  }),
 });
