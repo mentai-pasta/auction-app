@@ -9,7 +9,7 @@ import {
   getAuctionsHandler,
 } from './application/controller/AuctionController.js';
 import { postBidHandler } from './application/controller/BidController.js';
-import { postVerifyJwtHandler } from './application/controller/JwtController.js';
+import { getVerifyJwtHandler } from './application/controller/JwtController.js';
 import { postCustomerHandler } from './application/controller/CustomerController.js';
 import { postLoginHandler } from './application/controller/LoginController.js';
 import {
@@ -22,7 +22,7 @@ import {
   getAuctionsRoute,
 } from './application/routes/AuctionRoute.js';
 import { postBidRoute } from './application/routes/BidRoute.js';
-import { postVerifyJwtRoute } from './application/routes/JwtRoute.js';
+import { getVerifyJwtRoute } from './application/routes/JwtRoute.js';
 import { postCustomerRoute } from './application/routes/CustomerRoute.js';
 import { postLoginRoute } from './application/routes/LoginRoute.js';
 import { getStockByIdRoute, getStocksRoute } from './application/routes/StockRoute.js';
@@ -72,7 +72,7 @@ const route = app
   .openapi(postCustomerRoute, postCustomerHandler)
   .openapi(postBidRoute, postBidHandler)
   .openapi(postLoginRoute, postLoginHandler)
-  .openapi(postVerifyJwtRoute, postVerifyJwtHandler)
+  .openapi(getVerifyJwtRoute, getVerifyJwtHandler)
   .doc('/doc', {
     openapi: '3.0.0',
     info: {

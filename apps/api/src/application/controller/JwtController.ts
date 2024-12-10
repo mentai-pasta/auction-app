@@ -1,14 +1,22 @@
 import { type RouteHandler } from '@hono/zod-openapi';
+import { getCookie } from 'hono/cookie';
 import { verifyToken } from '../../infra/helper/jwt.js';
-import { postVerifyJwtRoute } from '../routes/JwtRoute.js';
+import { getVerifyJwtRoute } from '../routes/JwtRoute.js';
 
 // JWT検証ハンドラー
-export const postVerifyJwtHandler: RouteHandler<typeof postVerifyJwtRoute> = async (
-  c,
-) => {
-  const body = c.req.valid('json');
+export const getVerifyJwtHandler: RouteHandler<typeof getVerifyJwtRoute> = async (c) => {
+  const token = getCookie(c, 'token');
 
-  const resultVerify = await verifyToken(body.token);
+  if (!token) {
+    return c.json(
+      {
+        message: 'Unauthorized',
+      },
+      401,
+    );
+  }
+
+  const resultVerify = await verifyToken(token);
   if (resultVerify) {
     return c.json(
       {
