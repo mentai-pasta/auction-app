@@ -4,6 +4,8 @@ import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
+import { getStocksRoute } from './application/routes/StockRoute.js';
+import { getStocksHandler } from './application/controller/StockController.js';
 import {
   getAuctionByIdHandler,
   getAuctionsHandler,
@@ -58,6 +60,7 @@ const route = app
   .basePath('/api/v1')
   .openapi(getAuctionsRoute, getAuctionsHandler)
   .openapi(getAuctionByIdRoute, getAuctionByIdHandler)
+  .openapi(getStocksRoute, getStocksHandler)
   .openapi(postBidRoute, postBidHandler)
   .openapi(postLoginRoute, postLoginHandler)
   .doc('/doc', {
