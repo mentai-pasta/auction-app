@@ -1,23 +1,12 @@
 import { createRoute } from '@hono/zod-openapi';
 import { ErrorSchema } from '../schemas/ErrorSchema.js';
-import {
-  GetAuthJwtRequestSchema,
-  GetAuthJwtResponseSchema,
-} from '../schemas/JwtSchema.js';
+import { GetAuthJwtResponseSchema } from '../schemas/JwtSchema.js';
 
-export const postVerifyJwtRoute = createRoute({
-  method: 'post',
+export const getVerifyJwtRoute = createRoute({
+  method: 'get',
   path: '/verify',
   description: 'JWTの検証を行う',
-  request: {
-    body: {
-      content: {
-        'application/json': {
-          schema: GetAuthJwtRequestSchema,
-        },
-      },
-    },
-  },
+  request: {},
   responses: {
     200: {
       description: 'OK',
