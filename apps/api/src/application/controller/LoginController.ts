@@ -1,7 +1,6 @@
 import { type RouteHandler } from '@hono/zod-openapi';
 import { createHash } from 'crypto';
-import { sign } from 'hono/jwt';
-import { secret } from '../../infra/helper/jwt.js';
+import { loginToken } from '../../infra/helper/jwt.js';
 import { CustomerRepository } from '../../infra/repository/CustomerRepository.js';
 import type { postLoginRoute } from '../routes/LoginRoute.js';
 
@@ -15,15 +14,7 @@ export const postLoginHandler: RouteHandler<typeof postLoginRoute> = async (c) =
     result &&
     result.passwordHash === createHash('sha1').update(password).digest('hex')
   ) {
-    const token = await sign(
-      {
-        customer_id: result.customerId,
-        customer_name: result.name,
-        email: result.email,
-        exp: Math.floor(Date.now() / 1000) + 60 * 1, // 1 minute
-      },
-      secret,
-    );
+    const token = await loginToken(result.customerId, result.name, result.email);
 
     return c.json(
       {
