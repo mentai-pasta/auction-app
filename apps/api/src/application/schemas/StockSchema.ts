@@ -1,4 +1,5 @@
 import { z } from '@hono/zod-openapi';
+import { ImageListSchema } from './ImageSchema.js';
 
 // オークション一覧取得用商品スキーマ
 export const StockIdSchema = z.object({
@@ -33,6 +34,7 @@ export const StockSchema = z.object({
     .uuid()
     .openapi({ example: '5e1a6f97-72b8-81fa-2e7d-39cc54d982d4' }),
   sold_status_name: z.string().openapi({ example: '入札開始前' }),
+  image_list: ImageListSchema,
   begin_date: z.string().datetime().openapi({ example: '2024-11-10 12:00' }),
   created_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
   updated_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
@@ -96,6 +98,7 @@ export const StockResponseSchema = z.object({
     .uuid()
     .openapi({ example: '5e1a6f97-72b8-81fa-2e7d-39cc54d982d4' }),
   sold_status_name: z.string().openapi({ example: '入札開始前' }),
+  image_list: ImageListSchema,
   begin_date: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
   created_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
   updated_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),

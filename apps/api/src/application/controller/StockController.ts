@@ -9,22 +9,28 @@ export const getStocksHandler: RouteHandler<typeof getStocksRoute> = async (c) =
   const query = c.req.valid('query');
 
   const Stock = new StockRepository();
-  const result = Stock.getStocks(query);
+  const result = await Stock.getStocks(query);
 
-  const stocklist: StockListResponseSchema = (await result).map((stock) => {
+  const stocklist: StockListResponseSchema = result.map((stock) => {
     return {
-      stock_id: stock.stocks.stockId,
-      auction_id: stock.stocks.auctionId,
-      vehicle_id: stock.stocks.vehicleId,
-      series_id: stock.series.seriesId,
-      series_name: stock.series.name,
-      manufacturer_id: stock.series.manufacturerId,
-      manufacturer_name: stock.manufacturers.name,
-      sold_status_id: stock.sold_statuses.soldStatusId,
-      sold_status_name: stock.sold_statuses.name,
-      begin_date: stock.stocks.beginTime,
-      created_at: stock.stocks.createdAt,
-      updated_at: stock.stocks.updatedAt,
+      stock_id: stock.stockId,
+      auction_id: stock.auctionId,
+      vehicle_id: stock.vehicleId,
+      series_id: stock.vehicle.seriesId,
+      series_name: stock.vehicle.series.name,
+      manufacturer_id: stock.vehicle.series.manufacturerId,
+      manufacturer_name: stock.vehicle.series.manufacturer.name,
+      sold_status_id: stock.soldStatusId,
+      sold_status_name: stock.soldStatus.name,
+      image_list: stock.imagesStocks.map((image) => {
+        return {
+          image_id: image.imageId,
+          url: image.image.url,
+        };
+      }),
+      begin_date: stock.beginTime,
+      created_at: stock.createdAt,
+      updated_at: stock.updatedAt,
     };
   });
 
@@ -50,6 +56,12 @@ export const getStockByIdHandler: RouteHandler<typeof getStockByIdRoute> = async
         manufacturer_name: result.vehicle.series.manufacturer.name,
         sold_status_id: result.soldStatusId,
         sold_status_name: result.soldStatus.name,
+        image_list: result.imagesStocks.map((image) => {
+          return {
+            image_id: image.imageId,
+            url: image.image.url,
+          };
+        }),
         begin_date: result.beginTime,
         created_at: result.createdAt,
         updated_at: result.updatedAt,
