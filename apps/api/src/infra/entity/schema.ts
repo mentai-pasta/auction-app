@@ -25,6 +25,7 @@ export const customers = pgTable('customers', {
     .notNull(),
   updatedAt: timestamp('updated_at', { mode: 'string' })
     .default(sql`CURRENT_TIMESTAMP`)
+    .$onUpdate(() => sql`CURRENT_TIMESTAMP`)
     .notNull(),
 });
 
@@ -74,6 +75,7 @@ export const auctions = pgTable(
       .notNull(),
     updatedAt: timestamp('updated_at', { mode: 'string' })
       .default(sql`CURRENT_TIMESTAMP`)
+      .$onUpdate(() => sql`CURRENT_TIMESTAMP`)
       .notNull(),
     employeeId: uuid('employee_id').notNull(),
     duration: interval().notNull(),
@@ -97,6 +99,7 @@ export const stocks = pgTable(
       .notNull(),
     updatedAt: timestamp('updated_at', { mode: 'string' })
       .default(sql`CURRENT_TIMESTAMP`)
+      .$onUpdate(() => sql`CURRENT_TIMESTAMP`)
       .notNull(),
     auctionId: uuid('auction_id').notNull(),
     vehicleId: uuid('vehicle_id').notNull(),
@@ -131,6 +134,7 @@ export const vehicles = pgTable(
       .notNull(),
     updatedAt: timestamp('updated_at', { mode: 'string' })
       .default(sql`CURRENT_TIMESTAMP`)
+      .$onUpdate(() => sql`CURRENT_TIMESTAMP`)
       .notNull(),
     seriesId: uuid('series_id').notNull(),
     employeeId: uuid('employee_id').notNull(),
@@ -160,6 +164,7 @@ export const notifications = pgTable(
       .notNull(),
     updatedAt: timestamp('updated_at', { mode: 'string' })
       .default(sql`CURRENT_TIMESTAMP`)
+      .$onUpdate(() => sql`CURRENT_TIMESTAMP`)
       .notNull(),
     employeeId: uuid('employee_id').notNull(),
     deploySchedule: timestamp('deploy_schedule', { mode: 'string' }),
@@ -187,12 +192,13 @@ export const contacts = pgTable(
     title: varchar({ length: 255 }).notNull(),
     body: varchar({ length: 255 }).notNull(),
     employeeId: uuid('employee_id'),
-    createdAt: timestamp('created_at', { mode: 'string' }).default(
-      sql`CURRENT_TIMESTAMP`,
-    ),
-    updatedAt: timestamp('updated_at', { mode: 'string' }).default(
-      sql`CURRENT_TIMESTAMP`,
-    ),
+    createdAt: timestamp('created_at', { mode: 'string' })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
+    updatedAt: timestamp('updated_at', { mode: 'string' })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .$onUpdate(() => sql`CURRENT_TIMESTAMP`)
+      .notNull(),
   },
   (table) => [
     foreignKey({
@@ -230,9 +236,9 @@ export const bids = pgTable(
     customerId: uuid('customer_id').notNull(),
     stockId: uuid('stock_id').notNull(),
     price: numeric(),
-    createdAt: timestamp('created_at', { mode: 'string' }).default(
-      sql`CURRENT_TIMESTAMP`,
-    ),
+    createdAt: timestamp('created_at', { mode: 'string' })
+      .default(sql`CURRENT_TIMESTAMP`)
+      .notNull(),
   },
   (table) => [
     foreignKey({
