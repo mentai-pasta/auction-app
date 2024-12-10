@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { sign } from 'hono/jwt';
+import { sign, verify } from 'hono/jwt';
 
 if (!process.env.JWT_SECRET) {
   throw new Error('JWT_SECRET is not defined');
@@ -21,4 +21,14 @@ export const loginToken = async (
     },
     secret,
   );
+};
+
+export const verifyToken = async (token: string): Promise<boolean> => {
+  try {
+    await verify(token, secret);
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
 };
