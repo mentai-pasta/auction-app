@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Header from '@/components/molecules/Header';
+import Footer from '@/components/molecules/Footer';
 
 export const metadata: Metadata = {
   title: {
@@ -17,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className="antialiased">
-        {children}
+        <Header/>
+        <main>{children}</main>
+        <Footer/>
       </body>
     </html>
   );
