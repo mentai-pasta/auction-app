@@ -10,6 +10,10 @@ import {
 } from './application/controller/AuctionController.js';
 import { postBidHandler } from './application/controller/BidController.js';
 import { postLoginHandler } from './application/controller/LoginController.js';
+import {
+  getStockByIdHandler,
+  getStocksHandler,
+} from './application/controller/StockController.js';
 import { WebSocketHandler } from './application/controller/WebSocketController.js';
 import {
   getAuctionByIdRoute,
@@ -17,6 +21,7 @@ import {
 } from './application/routes/AuctionRoute.js';
 import { postBidRoute } from './application/routes/BidRoute.js';
 import { postLoginRoute } from './application/routes/LoginRoute.js';
+import { getStockByIdRoute, getStocksRoute } from './application/routes/StockRoute.js';
 import { StockIdSchema } from './application/schemas/StockSchema.js';
 
 const app = new OpenAPIHono();
@@ -58,6 +63,8 @@ const route = app
   .basePath('/api/v1')
   .openapi(getAuctionsRoute, getAuctionsHandler)
   .openapi(getAuctionByIdRoute, getAuctionByIdHandler)
+  .openapi(getStocksRoute, getStocksHandler)
+  .openapi(getStockByIdRoute, getStockByIdHandler)
   .openapi(postBidRoute, postBidHandler)
   .openapi(postLoginRoute, postLoginHandler)
   .doc('/doc', {
