@@ -6,10 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint src/**/*.{ts,tsx}",
     "format": "prettier . --write"
   },
   "dependencies": {
+    "dayjs": "^1.11.13",
     "hono": "^4.6.10",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
