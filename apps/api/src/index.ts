@@ -8,7 +8,7 @@ import {
   getAuctionByIdHandler,
   getAuctionsHandler,
 } from './application/controller/AuctionController.js';
-import { postBidHandler } from './application/controller/BidController.js';
+import { getBidHandler, postBidHandler } from './application/controller/BidController.js';
 import { getVerifyJwtHandler } from './application/controller/JwtController.js';
 import { postCustomerHandler } from './application/controller/CustomerController.js';
 import { postLoginHandler } from './application/controller/LoginController.js';
@@ -21,7 +21,7 @@ import {
   getAuctionByIdRoute,
   getAuctionsRoute,
 } from './application/routes/AuctionRoute.js';
-import { postBidRoute } from './application/routes/BidRoute.js';
+import { getBidRoute, postBidRoute } from './application/routes/BidRoute.js';
 import { getVerifyJwtRoute } from './application/routes/JwtRoute.js';
 import { postCustomerRoute } from './application/routes/CustomerRoute.js';
 import { postLoginRoute } from './application/routes/LoginRoute.js';
@@ -70,6 +70,7 @@ const route = app
   .openapi(getStocksRoute, getStocksHandler)
   .openapi(getStockByIdRoute, getStockByIdHandler)
   .openapi(postCustomerRoute, postCustomerHandler)
+  .openapi(getBidRoute, getBidHandler)
   .openapi(postBidRoute, postBidHandler)
   .openapi(postLoginRoute, postLoginHandler)
   .openapi(getVerifyJwtRoute, getVerifyJwtHandler)
