@@ -2,6 +2,7 @@ import { z, type RouteHandler } from '@hono/zod-openapi';
 import { StockRepository } from '../../infra/repository/StockRepository.js';
 import { getStockByIdRoute, getStocksRoute } from '../routes/StockRoute.js';
 import { StockListResponseSchema } from '../schemas/StockSchema.js';
+import { BidRepository } from '../../infra/repository/BidRepository.js';
 type StockListResponseSchema = z.infer<typeof StockListResponseSchema>;
 
 // 商品一覧取得用ハンドラ
@@ -45,6 +46,9 @@ export const getStockByIdHandler: RouteHandler<typeof getStockByIdRoute> = async
   const result = await Stock.getStockById(path);
 
   if (result) {
+    const bidRepo = new BidRepository();
+    const maxPrice = await bidRepo.getMaxBidPrice(result.stockId);
+
     return c.json(
       {
         stock_id: result.stockId,
@@ -62,6 +66,7 @@ export const getStockByIdHandler: RouteHandler<typeof getStockByIdRoute> = async
             url: image.image.url,
           };
         }),
+        price: maxPrice.max_price !== null ? Number(maxPrice.max_price) : undefined,
         begin_date: result.beginTime,
         created_at: result.createdAt,
         updated_at: result.updatedAt,
