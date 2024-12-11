@@ -45,8 +45,7 @@ export const Button: React.FC<ButtonProps> = ({
       <Link
         href={href}
         onClick={onClick}
-        aria-disabled={disabled}
-        className={`btn ${btnType}`}
+        className={`btn ${btnType} ${disabled ? 'btn-disabled' : ''}`}
       >
         {label}
       </Link>
