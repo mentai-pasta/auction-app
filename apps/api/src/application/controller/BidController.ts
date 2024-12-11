@@ -1,7 +1,7 @@
 import { type RouteHandler } from '@hono/zod-openapi';
 import type { WSContext } from 'hono/ws';
 import { BidRepository } from '../../infra/repository/BidRepository.js';
-import { postBidRoute } from '../routes/BidRoute.js';
+import { getBidRoute, postBidRoute } from '../routes/BidRoute.js';
 import { ws_stocks } from './WebSocketController.js';
 
 export const postBidHandler: RouteHandler<typeof postBidRoute> = async (c) => {
@@ -55,6 +55,32 @@ export const postBidHandler: RouteHandler<typeof postBidRoute> = async (c) => {
         stackTrace: e instanceof Error ? e.stack : undefined,
       },
       400,
+    );
+  }
+};
+
+export const getBidHandler: RouteHandler<typeof getBidRoute> = async (c) => {
+  const { stock_id } = c.req.valid('param');
+
+  try {
+    const bidRepo = new BidRepository();
+    const result = await bidRepo.getMaxBidPrice(stock_id);
+
+    return c.json(
+      {
+        bid_id: result.bid_id,
+        customer_id: result.customer_id,
+        price: result.max_price,
+      },
+      200,
+    );
+  } catch (e: unknown) {
+    return c.json(
+      {
+        message: e instanceof Error ? e.message : 'Unknown error',
+        stackTrace: e instanceof Error ? e.stack : undefined,
+      },
+      500,
     );
   }
 };
