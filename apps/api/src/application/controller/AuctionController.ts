@@ -70,6 +70,10 @@ export const getAuctionByIdHandler: RouteHandler<typeof getAuctionByIdRoute> = a
           begin_date: stock.beginTime,
           created_at: stock.createdAt,
           updated_at: stock.updatedAt,
+          image_list: stock.imagesStocks.map((image) => ({
+            image_id: image.imageId,
+            url: image.image.url,
+          })),
         };
       }),
       duration: duration,

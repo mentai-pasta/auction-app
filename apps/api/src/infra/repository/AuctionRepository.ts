@@ -41,6 +41,11 @@ export class AuctionRepository {
       with: {
         stocks: {
           with: {
+            imagesStocks: {
+              with: {
+                image: true,
+              },
+            },
             vehicle: {
               with: {
                 series: {
