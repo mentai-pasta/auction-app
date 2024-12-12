@@ -4,6 +4,7 @@ import { hc } from "hono/client";
 const client = hc<ApiType>("http://localhost:3001/");
 
 export const sendLogin = async (form: FormData) => {
+    const cookieStore = await cookies();
     const rawRes = await client.api.v1.login.$post({
         json: {
             email: form.get("loginId"),
@@ -14,5 +15,5 @@ export const sendLogin = async (form: FormData) => {
     let res = null;
     if (rawRes.ok) res = await rawRes.json();
 
-    return res;
+    cookieStore.set("token", res.token);
 };
