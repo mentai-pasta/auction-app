@@ -77,7 +77,7 @@ const route = app
   .doc('/doc', {
     openapi: '3.0.0',
     info: {
-      version: process.env.npm_package_version,
+      version: process.env.npm_package_version ?? '',
       title: 'Auction API',
     },
   })
