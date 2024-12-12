@@ -78,7 +78,7 @@ export const auctions = pgTable(
       .$onUpdate(() => sql`CURRENT_TIMESTAMP`)
       .notNull(),
     employeeId: uuid('employee_id').notNull(),
-    duration: interval().notNull(),
+    duration: interval({ fields: 'minute' }).notNull(),
     beginTime: timestamp('begin_time', { mode: 'string' }).notNull(),
   },
   (table) => [
