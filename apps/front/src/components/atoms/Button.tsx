@@ -16,7 +16,7 @@ interface ButtonProps {
   label?: string;
   disabled?: boolean;
   onClick?: () => void;
-  rounded?: boolean;
+  isSubmit?: boolean;
 }
 
 /**
@@ -39,14 +39,14 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   asLink = false,
   href = '',
+  isSubmit = false,
 }) => {
   if (asLink) {
     return (
       <Link
         href={href}
         onClick={onClick}
-        aria-disabled={disabled}
-        className={`btn ${btnType}`}
+        className={`btn w-full ${btnType} ${disabled ? 'btn-disabled' : ''}`}
       >
         {label}
       </Link>
@@ -54,7 +54,12 @@ export const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <button className={`btn ${btnType}`} onClick={onClick} disabled={disabled}>
+    <button
+      className={`btn w-full ${btnType}`}
+      onClick={onClick}
+      disabled={disabled}
+      type={isSubmit ? 'submit' : 'button'}
+    >
       {label}
     </button>
   );
