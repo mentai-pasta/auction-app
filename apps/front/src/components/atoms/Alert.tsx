@@ -49,7 +49,7 @@ export const Alert: React.FC<AlertProps> = ({
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
-        className="stroke-neutral h-6 w-6 shrink-0"
+        className="stroke-base-content h-6 w-6 shrink-0"
       >
         <path
           strokeLinecap="round"
