@@ -103,6 +103,7 @@ export const stocks = pgTable(
       .notNull(),
     auctionId: uuid('auction_id').notNull(),
     vehicleId: uuid('vehicle_id').notNull(),
+    employeeId: uuid('employee_id').notNull(),
     soldStatusId: uuid('sold_status_id').notNull(),
     beginTime: timestamp('begin_time', { mode: 'string' }).notNull(),
   },
@@ -116,6 +117,11 @@ export const stocks = pgTable(
       columns: [table.vehicleId],
       foreignColumns: [vehicles.vehicleId],
       name: 'stocks_vehicle_id_fkey',
+    }),
+    foreignKey({
+      columns: [table.employeeId],
+      foreignColumns: [employees.employeeId],
+      name: 'stocks_employee_id_fkey',
     }),
     foreignKey({
       columns: [table.soldStatusId],
@@ -326,6 +332,10 @@ export const stocksRelations = relations(stocks, ({ one, many }) => ({
   vehicle: one(vehicles, {
     fields: [stocks.vehicleId],
     references: [vehicles.vehicleId],
+  }),
+  employee: one(employees, {
+    fields: [stocks.employeeId],
+    references: [employees.employeeId],
   }),
   soldStatus: one(soldStatuses, {
     fields: [stocks.soldStatusId],
