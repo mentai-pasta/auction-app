@@ -6,6 +6,8 @@ import {
   AuctionQueryParamSchema,
   PostAuctionsBodySchema,
   PostAuctionsResponseSchema,
+  PutAuctionsBodySchema,
+  PutAuctionsResponseSchema,
 } from '../schemas/AuctionSchema.js';
 import { ErrorSchema } from '../schemas/ErrorSchema.js';
 
@@ -85,4 +87,39 @@ export const postAuctionsRoute = createRoute({
       },
     },
   },
+});
+
+// オークション更新用ルート
+export const putAuctionsRoute = createRoute({
+  method: 'put',
+  path: '/auctions',
+  description: '指定したオークションを更新する',
+  request: {
+    body: {
+      content: {
+        'application/json': {
+          schema: PutAuctionsBodySchema,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: 'OK',
+      content: {
+        'application/json': {
+          schema: PutAuctionsResponseSchema,
+        },
+      },
+    },
+    500: {
+      description: 'Internal Server Error',
+      content: {
+        'application/json': {
+          schema: ErrorSchema,
+        },
+      },
+    },
+  },
+  tags: ['オークション'],
 });
