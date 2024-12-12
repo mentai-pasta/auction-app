@@ -11,11 +11,15 @@ interface TimerProps {
   afterPhrase: string;
   /** タイマー開始前の文字列 */
   beforePhrase: string;
+  /** TimerPhaseが変更されたときに呼び出されます。 */
+  onChange?: (phase: TimerPhase) => void;
   /** 終了時に一度だけ呼び出されます */
-  onFinish: () => void;
+  onFinish?: () => void;
   /** 開始時に一度だけ呼び出されます */
-  onStart: () => void;
+  onStart?: () => void;
 }
+
+export type TimerPhase = 'before' | 'progress' | 'after';
 
 /**
  * カウントダウンタイマーコンポーネント
@@ -27,8 +31,9 @@ export const Timer = ({
   endTime,
   afterPhrase,
   beforePhrase,
-  onFinish,
-  onStart,
+  onChange = () => {},
+  onFinish = () => {},
+  onStart = () => {},
 }: TimerProps) => {
   const [remain, setRemain] = useState<string | undefined>();
   const beginTimeDayJs = dayjs(startTime);
@@ -39,10 +44,12 @@ export const Timer = ({
 
   extend(duration);
   useEffect(() => {
+    onChange('before');
     const id = setInterval(() => {
       const diff = dayjs.duration(endTimeDayJs.diff(dayjs()));
       if (beginTimeDayJs.isBefore(dayjs()) && endTimeDayJs.isAfter(dayjs())) {
         if (!isStartedRef.current) {
+          onChange('progress');
           onStart();
           isStartedRef.current = true;
         }
@@ -51,6 +58,7 @@ export const Timer = ({
       } else if (beginTimeDayJs.isAfter(dayjs())) {
         setRemain(beforePhrase);
       } else {
+        onChange('after');
         onFinish();
         setRemain(afterPhrase);
         clearInterval(id);
