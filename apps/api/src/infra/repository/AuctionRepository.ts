@@ -5,12 +5,14 @@ import {
   AuctionIdParamSchema,
   AuctionQueryParamSchema,
   PostAuctionsBodySchema,
+  PutAuctionsBodySchema,
 } from '../../application/schemas/AuctionSchema.js';
 import { auctions } from '../entity/schema.js';
 import { db } from '../helper/db.js';
 type AuctionQueryParamSchema = z.infer<typeof AuctionQueryParamSchema>;
 type AuctionIdParamSchema = z.infer<typeof AuctionIdParamSchema>;
 type PostAuctionsBodySchema = z.infer<typeof PostAuctionsBodySchema>;
+type PutAuctionsBodySchema = z.infer<typeof PutAuctionsBodySchema>;
 
 export class AuctionRepository {
   // オークション一覧取得
@@ -83,5 +85,27 @@ export class AuctionRepository {
     return {
       auction_id: result[0].insertId,
     };
+  }
+
+  // オークション更新
+  async updateAuction(body: PutAuctionsBodySchema) {
+    const result = await db
+      .update(auctions)
+      .set({
+        employeeId: body.employee_id,
+        duration: body.duration,
+        beginTime: body.begin_time,
+      })
+      .where(eq(auctions.auctionId, body.auction_id))
+      .returning({
+        auction_id: auctions.auctionId,
+        employee_id: auctions.employeeId,
+        duration: auctions.duration,
+        begin_time: auctions.beginTime,
+        created_at: auctions.createdAt,
+        updated_at: auctions.updatedAt,
+      });
+
+    return result[0];
   }
 }
