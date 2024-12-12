@@ -1,8 +1,9 @@
 import { z } from '@hono/zod-openapi';
 import { desc, eq, max } from 'drizzle-orm';
 import { PostBidBodySchema } from '../../application/schemas/BidSchema.js';
-import { bids } from '../entity/schema.js';
+import { bids, stocks } from '../entity/schema.js';
 import { db } from '../helper/db.js';
+import { getEndTime } from '../util/date.js';
 type PostBidBodySchema = z.infer<typeof PostBidBodySchema>;
 
 export class BidRepository {
@@ -17,8 +18,26 @@ export class BidRepository {
         .where(eq(bids.stockId, stock_id));
       const max_bid = result[0].value;
 
+      const stock = await trx.query.stocks.findFirst({
+        with: {
+          auction: true,
+        },
+        where: eq(stocks.stockId, stock_id),
+      });
+
+      if (!stock) {
+        throw new Error('stock not found');
+      }
+
+      const beginTime = new Date(stock.beginTime);
+      const endTime = getEndTime(stock.beginTime, stock.auction.duration);
+
       if (max_bid !== null && Number(max_bid) >= price) {
         throw new Error('low bid price');
+      } else if (beginTime > new Date()) {
+        throw new Error('auction not started');
+      } else if (endTime < new Date()) {
+        throw new Error('auction already ended');
       } else {
         const result = await trx
           .insert(bids)
