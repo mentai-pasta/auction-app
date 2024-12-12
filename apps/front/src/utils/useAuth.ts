@@ -1,22 +1,19 @@
-'use server'
-import { cookies } from 'next/headers'
-
-import { hc } from 'hono/client';
-import { ApiType } from 'api/src/index';
-
-const client = hc<ApiType>('http://localhost:3001/');
+'use server';
+import { cookies } from 'next/headers';
+import { useApi } from './useApi';
 
 export const useAuth = async () => {
-    const cookieStore = await cookies();
-    const jwtToken = cookieStore.get('token');
-    const rawRes = await client.api.v1.verify.$get({
-        token: jwtToken,
-    });
+  const cookieStore = await cookies();
+  const jwtToken = cookieStore.get('token');
+  // TODO: メモ化するとエラーをasync内で使用することができない旨のエラーが回避できるらしいので検討する。
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const client = useApi(jwtToken?.value ?? '');
+  const rawRes = await client.api.v1.verify.$get();
 
-    let res = null;
-    if (rawRes.ok) res = await rawRes.json();
+  let res = null;
+  if (rawRes.ok) res = await rawRes.json();
 
-    return res;
+  return res;
 };
 
 export default useAuth;
