@@ -91,5 +91,27 @@ export const AuctionDetailSchema = z.object({
   updated_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
 });
 
+// オークション新規作成用リクエストスキーマ
+export const PostAuctionsBodySchema = z.object({
+  employee_id: z
+    .string()
+    .uuid()
+    .openapi({ example: 'cd6c194b-aecb-8bac-c7cf-ad569ee9d5ea' }),
+  duration: z
+    .string()
+    .time()
+    .openapi({ example: '00:30:00', description: '商品の制限時間（HH:MM:SS）' }),
+  begin_time: z.string().datetime().openapi({ example: '2024-11-10T12:00:00Z' }),
+});
+
+// オークション新規作成用レスポンススキーマ
+export const PostAuctionsResponseSchema = z.object({
+  message: z.string().openapi({ example: 'ok' }),
+  auction_id: z
+    .string()
+    .uuid()
+    .openapi({ example: '07c3ce66-bda2-4e10-3752-8665cd96b26d' }),
+});
+
 // スキーマのリスト定義
 export const AuctionListSchema = z.array(AuctionSchema).openapi('AuctionListSchema');
