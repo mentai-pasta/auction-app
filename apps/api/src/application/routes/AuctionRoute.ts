@@ -4,6 +4,8 @@ import {
   AuctionIdParamSchema,
   AuctionListSchema,
   AuctionQueryParamSchema,
+  PostAuctionsBodySchema,
+  PostAuctionsResponseSchema,
 } from '../schemas/AuctionSchema.js';
 import { ErrorSchema } from '../schemas/ErrorSchema.js';
 
@@ -42,6 +44,40 @@ export const getAuctionByIdRoute = createRoute({
     },
     404: {
       description: 'Not Found',
+      content: {
+        'application/json': {
+          schema: ErrorSchema,
+        },
+      },
+    },
+  },
+});
+
+// オークション新規作成用ルート
+export const postAuctionsRoute = createRoute({
+  method: 'post',
+  path: '/auctions',
+  description: '新規オークションを作成する',
+  request: {
+    body: {
+      content: {
+        'application/json': {
+          schema: PostAuctionsBodySchema,
+        },
+      },
+    },
+  },
+  responses: {
+    201: {
+      description: 'Created',
+      content: {
+        'application/json': {
+          schema: PostAuctionsResponseSchema,
+        },
+      },
+    },
+    500: {
+      description: 'Internal Server Error',
       content: {
         'application/json': {
           schema: ErrorSchema,
