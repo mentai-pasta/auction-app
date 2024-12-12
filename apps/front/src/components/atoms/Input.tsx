@@ -4,15 +4,15 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   inputSize?: 'input-xs' | 'input-sm' | 'input-md' | 'input-lg';
   variant?:
-    | 'input-bordered'
-    | 'input-ghost'
-    | 'input-primary'
-    | 'input-secondary'
-    | 'input-accent'
-    | 'input-info'
-    | 'input-success'
-    | 'input-warning'
-    | 'input-error';
+  | 'input-bordered'
+  | 'input-ghost'
+  | 'input-primary'
+  | 'input-secondary'
+  | 'input-accent'
+  | 'input-info'
+  | 'input-success'
+  | 'input-warning'
+  | 'input-error';
 }
 
 /**
@@ -52,7 +52,7 @@ export const Input: React.FC<InputProps> = ({
   return (
     <label htmlFor="form-control w-full">
       <Label />
-      <input className={`input ${variant} ${inputSize}`} {...input} />
+      <input className={`input ${variant} ${inputSize} w-full`} {...input} />
     </label>
   );
 };
