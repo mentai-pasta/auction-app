@@ -23,12 +23,12 @@ export const loginToken = async (
   );
 };
 
-export const verifyToken = async (token: string): Promise<boolean> => {
+export const verifyToken = async (token: string) => {
   try {
-    await verify(token, secret);
-    return true;
+    const decodedPayload = await verify(token, secret);
+    return decodedPayload;
   } catch (e) {
     console.log(e);
-    return false;
+    return;
   }
 };
