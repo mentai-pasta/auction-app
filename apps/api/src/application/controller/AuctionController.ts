@@ -4,6 +4,7 @@ import {
   getAuctionByIdRoute,
   getAuctionsRoute,
   postAuctionsRoute,
+  putAuctionsRoute,
 } from '../routes/AuctionRoute.js';
 import { AuctionDetailSchema, AuctionListSchema } from '../schemas/AuctionSchema.js';
 import { ErrorSchema } from '../schemas/ErrorSchema.js';
@@ -116,6 +117,37 @@ export const postAuctionsHandler: RouteHandler<typeof postAuctionsRoute> = async
       {
         message: e instanceof Error ? e.message : 'Internal Server Error',
         stackTrace: e instanceof Error ? e.stack : undefined,
+      },
+      500,
+    );
+  }
+};
+
+// オークション更新ハンドラ
+export const putAuctionsHandler: RouteHandler<typeof putAuctionsRoute> = async (c) => {
+  const body = c.req.valid('json');
+
+  try {
+    const auctionRepo = new AuctionRepository();
+    const result = await auctionRepo.updateAuction(body);
+
+    return c.json(
+      {
+        message: 'ok',
+        auction_id: result.auction_id,
+        employee_id: result.employee_id,
+        duration: result.duration,
+        begin_time: result.begin_time,
+        created_at: result.created_at,
+        updated_at: result.updated_at,
+      },
+      200,
+    );
+  } catch (e: unknown) {
+    console.log(e);
+    return c.json(
+      {
+        message: 'Internal Server Error',
       },
       500,
     );
