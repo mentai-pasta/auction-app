@@ -1,6 +1,10 @@
 import { z, type RouteHandler } from '@hono/zod-openapi';
 import { AuctionRepository } from '../../infra/repository/AuctionRepository.js';
-import { getAuctionByIdRoute, getAuctionsRoute } from '../routes/AuctionRoute.js';
+import {
+  getAuctionByIdRoute,
+  getAuctionsRoute,
+  postAuctionsRoute,
+} from '../routes/AuctionRoute.js';
 import { AuctionDetailSchema, AuctionListSchema } from '../schemas/AuctionSchema.js';
 import { ErrorSchema } from '../schemas/ErrorSchema.js';
 type AuctionListSchema = z.infer<typeof AuctionListSchema>;
@@ -89,5 +93,31 @@ export const getAuctionByIdHandler: RouteHandler<typeof getAuctionByIdRoute> = a
     };
 
     return c.json(message, 404);
+  }
+};
+
+// オークション新規作成ハンドラ
+export const postAuctionsHandler: RouteHandler<typeof postAuctionsRoute> = async (c) => {
+  const body = c.req.valid('json');
+
+  try {
+    const auctionRepo = new AuctionRepository();
+    const result = await auctionRepo.createAuction(body);
+
+    return c.json(
+      {
+        message: 'ok',
+        auction_id: result.auction_id,
+      },
+      201,
+    );
+  } catch (e: unknown) {
+    return c.json(
+      {
+        message: e instanceof Error ? e.message : 'Internal Server Error',
+        stackTrace: e instanceof Error ? e.stack : undefined,
+      },
+      500,
+    );
   }
 };
