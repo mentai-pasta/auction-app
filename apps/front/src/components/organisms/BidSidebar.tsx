@@ -166,7 +166,7 @@ export const BidSidebar = ({
   };
 
   return (
-    <Card className={'min-w-[370px] max-w-[400px]'}>
+    <Card className="min-w-[370px] max-w-[400px] sticky top-6">
       <section className="flex flex-row flex-wrap justify-between items-center">
         <div>
           <h2>残り時間</h2>
