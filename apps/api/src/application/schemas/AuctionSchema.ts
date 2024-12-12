@@ -113,5 +113,49 @@ export const PostAuctionsResponseSchema = z.object({
     .openapi({ example: '07c3ce66-bda2-4e10-3752-8665cd96b26d' }),
 });
 
+// オークション更新用リクエストスキーマ
+export const PutAuctionsBodySchema = z.object({
+  auction_id: z
+    .string()
+    .uuid()
+    .openapi({ example: '07c3ce66-bda2-4e10-3752-8665cd96b26d' }),
+  employee_id: z
+    .string()
+    .uuid()
+    .optional()
+    .openapi({ example: 'cd6c194b-aecb-8bac-c7cf-ad569ee9d5ea' }),
+  duration: z
+    .string()
+    .time()
+    .optional()
+    .openapi({ example: '00:30:00', description: '商品の制限時間（HH:MM:SS）' }),
+  begin_time: z
+    .string()
+    .datetime()
+    .optional()
+    .openapi({ example: '2024-11-10T12:00:00Z' }),
+});
+
+// オークション更新用レスポンススキーマ
+export const PutAuctionsResponseSchema = z.object({
+  message: z.string().openapi({ example: 'ok' }),
+  auction_id: z
+    .string()
+    .uuid()
+    .openapi({ example: '07c3ce66-bda2-4e10-3752-8665cd96b26d' }),
+  employee_id: z
+    .string()
+    .uuid()
+    .openapi({ example: 'cd6c194b-aecb-8bac-c7cf-ad569ee9d5ea' }),
+  duration: z
+    .string()
+    .time()
+    .optional()
+    .openapi({ example: '00:30:00', description: '商品の制限時間（HH:MM:SS）' }),
+  begin_time: z.string().datetime().openapi({ example: '2024-11-10 12:00' }),
+  created_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
+  updated_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
+});
+
 // スキーマのリスト定義
 export const AuctionListSchema = z.array(AuctionSchema).openapi('AuctionListSchema');
