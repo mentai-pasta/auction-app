@@ -11,6 +11,7 @@ interface ButtonProps {
     | 'btn-info'
     | 'btn-ghost'
     | 'btn-accent';
+  className?: string;
   asLink?: boolean;
   href?: string;
   label?: string;
@@ -35,6 +36,7 @@ interface ButtonProps {
 export const Button: React.FC<ButtonProps> = ({
   btnType = 'primary',
   label = 'Button',
+  className,
   onClick,
   disabled = false,
   asLink = false,
@@ -46,7 +48,7 @@ export const Button: React.FC<ButtonProps> = ({
       <Link
         href={href}
         onClick={onClick}
-        className={`btn w-full ${btnType} ${disabled ? 'btn-disabled' : ''}`}
+        className={`btn ${btnType} ${disabled ? 'btn-disabled' : ''} ${className}`}
       >
         {label}
       </Link>
@@ -55,7 +57,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`btn w-full ${btnType}`}
+      className={`btn ${btnType} ${className}`}
       onClick={onClick}
       disabled={disabled}
       type={isSubmit ? 'submit' : 'button'}
