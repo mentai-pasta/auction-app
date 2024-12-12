@@ -105,6 +105,46 @@ export const StockResponseSchema = z.object({
   updated_at: z.string().datetime().openapi({ example: '2024-11-05 12:00' }),
 });
 
+// 商品新規登録用リクエストスキーマ
+export const PostStocksBodySchema = z.object({
+  auction_id: z
+    .string()
+    .uuid()
+    .openapi({ example: '07c3ce66-bda2-4e10-3752-8665cd96b26d' }),
+  vehicle_id: z
+    .string()
+    .uuid()
+    .openapi({ example: 'c1ef68d4-4675-49c5-63dc-4adc52284d82' }),
+  employee_id: z
+    .string()
+    .uuid()
+    .openapi({ example: 'c1ef68d4-4675-49c5-63dc-4adc52284d82' }),
+  sold_status_id: z
+    .string()
+    .uuid()
+    .openapi({ example: '5e1a6f97-72b8-81fa-2e7d-39cc54d982d4' }),
+  image_list: z
+    .array(
+      z.object({
+        image_id: z
+          .string()
+          .uuid()
+          .openapi({ example: 'b1db3622-3162-9a45-1742-44c4e3d9105b' }),
+      }),
+    )
+    .openapi({ example: [{ image_id: 'b1db3622-3162-9a45-1742-44c4e3d9105b' }] }),
+  begin_time: z.string().datetime().openapi({ example: '2024-11-10T12:00:00Z' }),
+});
+
+// 商品新規登録用レスポンススキーマ
+export const PostStocksResponseSchema = z.object({
+  message: z.string().openapi({ example: 'ok' }),
+  stock_id: z
+    .string()
+    .uuid()
+    .openapi({ example: '7996ba52-eb36-09da-a21a-978e6cae937f' }),
+});
+
 // スキーマのリスト定義
 export const StockIdListSchema = z.array(StockIdSchema).openapi('StockIdListSchema');
 export const StockListSchema = z.array(StockSchema).openapi('StockListSchema');
