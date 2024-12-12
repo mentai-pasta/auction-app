@@ -1,8 +1,12 @@
 import { z, type RouteHandler } from '@hono/zod-openapi';
-import { StockRepository } from '../../infra/repository/StockRepository.js';
-import { getStockByIdRoute, getStocksRoute } from '../routes/StockRoute.js';
-import { StockListResponseSchema } from '../schemas/StockSchema.js';
 import { BidRepository } from '../../infra/repository/BidRepository.js';
+import { StockRepository } from '../../infra/repository/StockRepository.js';
+import {
+  getStockByIdRoute,
+  getStocksRoute,
+  postStocksRoute,
+} from '../routes/StockRoute.js';
+import { StockListResponseSchema } from '../schemas/StockSchema.js';
 type StockListResponseSchema = z.infer<typeof StockListResponseSchema>;
 
 // 商品一覧取得用ハンドラ
@@ -75,5 +79,26 @@ export const getStockByIdHandler: RouteHandler<typeof getStockByIdRoute> = async
     );
   } else {
     return c.json({ message: 'Not Found' }, 404);
+  }
+};
+
+// 商品新規登録用ハンドラ
+export const postStocksHandler: RouteHandler<typeof postStocksRoute> = async (c) => {
+  const body = c.req.valid('json');
+
+  try {
+    const stockRepo = new StockRepository();
+    const result = await stockRepo.createStock(body);
+
+    return c.json(
+      {
+        message: 'ok',
+        stock_id: result.stock_id,
+      },
+      201,
+    );
+  } catch (e: unknown) {
+    console.log(e);
+    return c.json({ message: 'Internal Server Error' }, 500);
   }
 };
