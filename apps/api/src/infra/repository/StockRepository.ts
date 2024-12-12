@@ -2,13 +2,15 @@ import { z } from '@hono/zod-openapi';
 import type { SQLWrapper } from 'drizzle-orm';
 import { and, eq, inArray } from 'drizzle-orm';
 import {
+  PostStocksBodySchema,
   StockIdSchema,
   StockQuerySchema,
 } from '../../application/schemas/StockSchema.js';
-import { series, stocks, vehicles } from '../entity/schema.js';
+import { imagesStocks, series, stocks, vehicles } from '../entity/schema.js';
 import { db } from '../helper/db.js';
 type StockQuerySchema = z.infer<typeof StockQuerySchema>;
 type StockIdSchema = z.infer<typeof StockIdSchema>;
+type PostStocksBodySchema = z.infer<typeof PostStocksBodySchema>;
 
 export class StockRepository {
   // 商品一覧取得
@@ -105,5 +107,36 @@ export class StockRepository {
     });
 
     return result;
+  }
+
+  // 商品新規登録
+  async createStock(body: PostStocksBodySchema) {
+    return await db.transaction(async (trx) => {
+      const result = await trx
+        .insert(stocks)
+        .values({
+          auctionId: body.auction_id,
+          vehicleId: body.vehicle_id,
+          employeeId: body.employee_id,
+          soldStatusId: body.sold_status_id,
+          beginTime: body.begin_time,
+        })
+        .returning({
+          insertId: stocks.stockId,
+        });
+
+      if (body.image_list.length > 0) {
+        await trx.insert(imagesStocks).values(
+          body.image_list.map((image) => ({
+            stockId: result[0].insertId,
+            imageId: image.image_id,
+          })),
+        );
+      }
+
+      return {
+        stock_id: result[0].insertId,
+      };
+    });
   }
 }
