@@ -241,7 +241,7 @@ export const bids = pgTable(
     bidId: uuid('bid_id').defaultRandom().primaryKey().notNull(),
     customerId: uuid('customer_id').notNull(),
     stockId: uuid('stock_id').notNull(),
-    price: numeric(),
+    price: numeric().notNull(),
     createdAt: timestamp('created_at', { mode: 'string' })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),

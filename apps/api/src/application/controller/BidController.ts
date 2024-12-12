@@ -37,7 +37,7 @@ export const postBidHandler: RouteHandler<typeof postBidRoute> = async (c) => {
     if (e instanceof Error && e.message === 'low bid price') {
       const Bid = new BidRepository();
       const max_bid = await Bid.getMaxBidPrice(body.stock_id);
-      const max_price = max_bid.max_price ?? 0;
+      const max_price = max_bid.max_price;
 
       return c.json(
         {
