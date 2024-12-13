@@ -9,23 +9,25 @@ import {
   getAuctionsHandler,
 } from './application/controller/AuctionController.js';
 import { getBidHandler, postBidHandler } from './application/controller/BidController.js';
-import { getVerifyJwtHandler } from './application/controller/JwtController.js';
 import { postCustomerHandler } from './application/controller/CustomerController.js';
+import { getVerifyJwtHandler } from './application/controller/JwtController.js';
 import { postLoginHandler } from './application/controller/LoginController.js';
 import {
   getStockByIdHandler,
   getStocksHandler,
 } from './application/controller/StockController.js';
+import { postVehiclesHandler } from './application/controller/VehicleController.js';
 import { WebSocketHandler } from './application/controller/WebSocketController.js';
 import {
   getAuctionByIdRoute,
   getAuctionsRoute,
 } from './application/routes/AuctionRoute.js';
 import { getBidRoute, postBidRoute } from './application/routes/BidRoute.js';
-import { getVerifyJwtRoute } from './application/routes/JwtRoute.js';
 import { postCustomerRoute } from './application/routes/CustomerRoute.js';
+import { getVerifyJwtRoute } from './application/routes/JwtRoute.js';
 import { postLoginRoute } from './application/routes/LoginRoute.js';
 import { getStockByIdRoute, getStocksRoute } from './application/routes/StockRoute.js';
+import { postVehiclesRoute } from './application/routes/VehicleRoute.js';
 import { StockIdSchema } from './application/schemas/StockSchema.js';
 
 const app = new OpenAPIHono();
@@ -69,6 +71,7 @@ const route = app
   .openapi(getAuctionByIdRoute, getAuctionByIdHandler)
   .openapi(getStocksRoute, getStocksHandler)
   .openapi(getStockByIdRoute, getStockByIdHandler)
+  .openapi(postVehiclesRoute, postVehiclesHandler)
   .openapi(postCustomerRoute, postCustomerHandler)
   .openapi(getBidRoute, getBidHandler)
   .openapi(postBidRoute, postBidHandler)
