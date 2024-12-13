@@ -15,6 +15,7 @@ import { postLoginHandler } from './application/controller/LoginController.js';
 import {
   getStockByIdHandler,
   getStocksHandler,
+  postStocksHandler,
 } from './application/controller/StockController.js';
 import { postVehiclesHandler } from './application/controller/VehicleController.js';
 import { WebSocketHandler } from './application/controller/WebSocketController.js';
@@ -26,7 +27,11 @@ import { getBidRoute, postBidRoute } from './application/routes/BidRoute.js';
 import { postCustomerRoute } from './application/routes/CustomerRoute.js';
 import { getVerifyJwtRoute } from './application/routes/JwtRoute.js';
 import { postLoginRoute } from './application/routes/LoginRoute.js';
-import { getStockByIdRoute, getStocksRoute } from './application/routes/StockRoute.js';
+import {
+  getStockByIdRoute,
+  getStocksRoute,
+  postStocksRoute,
+} from './application/routes/StockRoute.js';
 import { postVehiclesRoute } from './application/routes/VehicleRoute.js';
 import { StockIdSchema } from './application/schemas/StockSchema.js';
 
@@ -71,6 +76,7 @@ const route = app
   .openapi(getAuctionByIdRoute, getAuctionByIdHandler)
   .openapi(getStocksRoute, getStocksHandler)
   .openapi(getStockByIdRoute, getStockByIdHandler)
+  .openapi(postStocksRoute, postStocksHandler)
   .openapi(postVehiclesRoute, postVehiclesHandler)
   .openapi(postCustomerRoute, postCustomerHandler)
   .openapi(getBidRoute, getBidHandler)

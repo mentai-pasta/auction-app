@@ -1,6 +1,8 @@
 import { createRoute } from '@hono/zod-openapi';
 import { ErrorSchema } from '../schemas/ErrorSchema.js';
 import {
+  PostStocksBodySchema,
+  PostStocksResponseSchema,
   StockIdSchema,
   StockListResponseSchema,
   StockQuerySchema,
@@ -23,6 +25,7 @@ export const getStocksRoute = createRoute({
       },
     },
   },
+  tags: ['商品'],
 });
 
 // 商品一件取得用ルート
@@ -49,4 +52,40 @@ export const getStockByIdRoute = createRoute({
       },
     },
   },
+  tags: ['商品'],
+});
+
+// 商品新規登録用ルート
+export const postStocksRoute = createRoute({
+  method: 'post',
+  path: '/stocks',
+  description: '商品を新規登録する',
+  request: {
+    body: {
+      content: {
+        'application/json': {
+          schema: PostStocksBodySchema,
+        },
+      },
+    },
+  },
+  responses: {
+    201: {
+      description: 'Created',
+      content: {
+        'application/json': {
+          schema: PostStocksResponseSchema,
+        },
+      },
+    },
+    500: {
+      description: 'Internal Server Error',
+      content: {
+        'application/json': {
+          schema: ErrorSchema,
+        },
+      },
+    },
+  },
+  tags: ['商品'],
 });
