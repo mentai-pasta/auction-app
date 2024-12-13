@@ -11,12 +11,13 @@ interface ButtonProps {
     | 'btn-info'
     | 'btn-ghost'
     | 'btn-accent';
+  className?: string;
   asLink?: boolean;
   href?: string;
   label?: string;
   disabled?: boolean;
   onClick?: () => void;
-  rounded?: boolean;
+  isSubmit?: boolean;
 }
 
 /**
@@ -35,18 +36,19 @@ interface ButtonProps {
 export const Button: React.FC<ButtonProps> = ({
   btnType = 'primary',
   label = 'Button',
+  className,
   onClick,
   disabled = false,
   asLink = false,
   href = '',
+  isSubmit = false,
 }) => {
   if (asLink) {
     return (
       <Link
         href={href}
         onClick={onClick}
-        aria-disabled={disabled}
-        className={`btn ${btnType}`}
+        className={`btn ${btnType} ${disabled ? 'btn-disabled' : ''} ${className}`}
       >
         {label}
       </Link>
@@ -54,7 +56,12 @@ export const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <button className={`btn ${btnType}`} onClick={onClick} disabled={disabled}>
+    <button
+      className={`btn ${btnType} ${className}`}
+      onClick={onClick}
+      disabled={disabled}
+      type={isSubmit ? 'submit' : 'button'}
+    >
       {label}
     </button>
   );

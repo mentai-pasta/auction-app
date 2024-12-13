@@ -17,6 +17,7 @@ import {
   getStocksHandler,
   postStocksHandler,
 } from './application/controller/StockController.js';
+import { postVehiclesHandler } from './application/controller/VehicleController.js';
 import { WebSocketHandler } from './application/controller/WebSocketController.js';
 import {
   getAuctionByIdRoute,
@@ -31,6 +32,7 @@ import {
   getStocksRoute,
   postStocksRoute,
 } from './application/routes/StockRoute.js';
+import { postVehiclesRoute } from './application/routes/VehicleRoute.js';
 import { StockIdSchema } from './application/schemas/StockSchema.js';
 
 const app = new OpenAPIHono();
@@ -75,6 +77,7 @@ const route = app
   .openapi(getStocksRoute, getStocksHandler)
   .openapi(getStockByIdRoute, getStockByIdHandler)
   .openapi(postStocksRoute, postStocksHandler)
+  .openapi(postVehiclesRoute, postVehiclesHandler)
   .openapi(postCustomerRoute, postCustomerHandler)
   .openapi(getBidRoute, getBidHandler)
   .openapi(postBidRoute, postBidHandler)
@@ -83,7 +86,7 @@ const route = app
   .doc('/doc', {
     openapi: '3.0.0',
     info: {
-      version: process.env.npm_package_version,
+      version: process.env.npm_package_version ?? '',
       title: 'Auction API',
     },
   })

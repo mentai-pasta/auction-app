@@ -1,5 +1,5 @@
 import { z } from '@hono/zod-openapi';
-import { eq, max } from 'drizzle-orm';
+import { desc, eq, max } from 'drizzle-orm';
 import { PostBidBodySchema } from '../../application/schemas/BidSchema.js';
 import { bids } from '../entity/schema.js';
 import { db } from '../helper/db.js';
@@ -15,9 +15,9 @@ export class BidRepository {
         .select({ value: max(bids.price) })
         .from(bids)
         .where(eq(bids.stockId, stock_id));
-      const max_bid = result[0];
+      const max_bid = result[0].value;
 
-      if (max_bid.value !== null && max_bid.value >= price.toString()) {
+      if (max_bid !== null && Number(max_bid) >= price) {
         throw new Error('low bid price');
       } else {
         const result = await trx
@@ -40,17 +40,12 @@ export class BidRepository {
   // 最高入札額取得
   async getMaxBidPrice(stock_id: string) {
     return await db.transaction(async (trx) => {
-      const result = await trx
-        .select({
-          bidId: bids.bidId,
-          customerId: bids.customerId,
-          max_price: max(bids.price),
-        })
-        .from(bids)
-        .where(eq(bids.stockId, stock_id))
-        .groupBy(bids.bidId, bids.customerId);
+      const result = await trx.query.bids.findFirst({
+        where: eq(bids.stockId, stock_id),
+        orderBy: desc(bids.price),
+      });
 
-      if (result.length === 0) {
+      if (!result) {
         return {
           bid_id: '',
           customer_id: '',
@@ -59,9 +54,9 @@ export class BidRepository {
       }
 
       const response = {
-        bid_id: result[0].bidId,
-        customer_id: result[0].customerId,
-        max_price: Number(result[0].max_price),
+        bid_id: result.bidId,
+        customer_id: result.customerId,
+        max_price: Number(result.price),
       };
       return response;
     });

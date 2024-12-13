@@ -21,6 +21,7 @@ export const getVerifyJwtHandler: RouteHandler<typeof getVerifyJwtRoute> = async
     return c.json(
       {
         message: 'Verified',
+        customer_id: resultVerify.customer_id,
       },
       200,
     );
